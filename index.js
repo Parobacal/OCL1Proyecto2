@@ -1,16 +1,18 @@
+/*
+ SERVIDOR NODE JS con uso de EXPRESS
+*/
+
+//Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
 const app = express();
-const router = express.Router();
+const cors = require("cors")
+app.listen(3000, () => console.log('Server NODE JS listening on 3000'));
+app.use(cors())
+app.use(express.static('public'));
+app.use(express.json());
 
-app.get('/', (req,res) => {
-    res.send('HELLO world');
-});
-
-app.listen(3000, () => {
-    console.log('Server on port 3000');
-});
-
-app.get('/envio', (req,res,next) =>{
-    console.log("algo llego");
-    console.log(req.body);
-});
+//Metodo POST para recibir datos desde el index.html corriendo en el servidor de GO
+app.post('/api', (request,response) => {
+    console.log('Se recibio informacion desde puerto servidor GO(5000)');
+    console.log(request.body);
+})

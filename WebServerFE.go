@@ -1,3 +1,7 @@
+/*
+ SERVIDOR GO
+*/
+//Configuracion para el servidor
 package main
 
 import (
@@ -6,6 +10,7 @@ import (
 	"net/http"
 )
 
+//Llamada a funcion para levantar servidor desde puerto 5000
 func index(w http.ResponseWriter, r *http.Request) {
 
 	template, err := template.ParseFiles("index.html")
@@ -21,7 +26,7 @@ func main() {
 	//http.Handle("/webpage/css/", http.StripPrefix("/webpage/css/", http.FileServer(http.Dir("webpage/css/"))))
 
 	http.HandleFunc("/", index)
-	fmt.Println("El servidor esta a la escucha del puerto 5000")
+	fmt.Println("Server GO listening at 5000")
 	http.ListenAndServe(":5000", nil)
 
 }

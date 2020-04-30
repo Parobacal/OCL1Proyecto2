@@ -197,14 +197,16 @@ function DescargarArchivo(){
 
 function enviar(){
     var ta=document.getElementById(get_vent());
-    var contenido=ta.value;//texto de vent actual
-    fetch('https://localhost:3000/envio', {
+    const contenido=ta.value;//texto de vent actual
+    console.log('Enviando desde servidor GO (:5000)');
+    const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: 'CAMILO'
+            data: contenido
         })
-    })
+    };
+    fetch('http://localhost:3000/api', options);
 }
