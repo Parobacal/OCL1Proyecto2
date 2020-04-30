@@ -1,0 +1,22 @@
+{
+  "name": "ocl1proyecto2",
+  "version": "1.0.0",
+  "description": "Proyecto 1 de compiladores 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Parobacal/OCL1Proyecto2.git"
+  },
+  "author": "pablobarillas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Parobacal/OCL1Proyecto2/issues"
+  },
+  "homepage": "https://github.com/Parobacal/OCL1Proyecto2#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

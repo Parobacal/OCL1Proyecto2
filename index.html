@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if lt IE 8 ]><html class="no-js ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="no-js ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 8)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+   
+   <!--- Basic Page Needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>Proyecto 2</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+   <!-- Mobile Specific Metas
+   ==================================================s -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+    ================================================== -->
+   <link rel="stylesheet" href="../webpage/css/default.css">
+   <link rel="stylesheet" href="../webpage/css/layout.css">
+   <link rel="stylesheet" href="../webpage/css/media-queries.css">
+   <link rel="stylesheet" type="text/css" href="../webpage/css/css.css">
+   <link rel="stylesheet" type="text/css" href="../webpage/css/tab.css"/>
+
+   
+   <link rel="stylesheet" href="../webpage/codemirror//lib//codemirror.css">
+   <link rel="stylesheet" href="../webpage/codemirror//theme//eclipse.css">
+  
+   <!-- Script
+   ================================================== -->
+   <script type = "text/javascript"src="../webpage/js/tab.js"></script>
+   <script src="../webpage/js/modernizr.js"></script>
+   <script src="../webpage/codemirror/lib/codemirror.js"></script>
+   <script src="../webpage/codemirror/mode/clike/clike.js"></script>
+
+   <script type="text/javascript" src="../webpage/jquery-1.7.2.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+   <!-- Header
+   ================================================== -->
+   <header>
+
+      <div class="row">
+
+         <div class="twelve columns">
+
+            <div class="logo">
+               <a href="index.html"><img alt="" src="../webpage/images/logo.png"></a>
+            </div>
+
+            <nav id="nav-wrap">
+
+               <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+	            <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+
+               <ul id="nav" class="nav">
+
+	               <li><span><a>Archivo</a></span>
+                     <ul>
+                        <input id="fileInput" title="Abrir" type="file" size="50" onchange="AbrirArchivo(this.files)">
+                        <li><a onclick="DescargarArchivo()">Guardar</a></li>
+                     </ul>
+                  </li>
+                  <li><span><a href="portfolio-index.html">Pestaña</a></span>
+                     <ul>
+                        <li><a onclick="agregar()">Nueva Pestaña</a></li>
+                        <li><a onclick="quitar()">Cerrar Pestaña</a></li>
+                     </ul>
+                  </li>
+                  <li><span><a href="portfolio-index.html">Reportes</a></span>
+                     <ul>
+                        <li><a onload="report()">Errores</a></li>
+                        <li><a href="portfolio.html">Portfolio Entry</a></li>
+                     </ul>
+                  </li>
+                  
+
+               </ul> <!-- end #nav -->
+
+            </nav> <!-- end #nav-wrap -->
+
+         </div>
+
+      </div>
+
+   </header> <!-- Header End -->
+
+   <!-- Intro Section
+   ================================================== -->
+   <section id="intro">
+
+      
+      <div id="page-title">
+
+         <div class="row">
+   
+            <div class="ten columns centered text-center">
+               <h1>Antennae<span>.</span></h1>
+   
+               <p>Abra los archivos de texto con el código Java y presione el botón para comparar. </p>
+            </div>
+   
+         </div>
+   
+      </div> <!-- Page Title End-->
+   </section> <!-- Intro Section End-->
+
+
+
+   <div class = "texto1">Archivos de entrada</div>
+
+   <div class="contenedor">
+           <div id="pestanas">
+          <ul id=lista>
+          </ul>
+      </div>
+
+      <body>
+          <div id="contenidopestanas">
+          </div>
+  </div>
+
+  <div class = "texto1">Salidas</div>
+  <div class="tabContainer">
+   <div class="buttonContainer">
+       <button onclick="showPanel(0,'#008C9E')">Resultado</button>
+       <button onclick="showPanel(1,'#008C9E')">Errores Léxicos</button>
+       <button onclick="showPanel(2,'#008C9E')">Erroes Sintácticos</button>
+   </div>
+   <div class="tabPanel">
+      <textarea id = "fileContents" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Copia o no copia</textarea>
+   </div>
+   <div class="tabPanel">
+      <textarea id = "fileContents" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Errores Lexicos</textarea>
+   </div>
+   <div class="tabPanel">
+      <textarea id = "fileContents" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Errores Sintacticos</textarea>
+   </div>
+</div>
+  <!-- Consolas-->
+  <!-- end #nav 
+  <div class = "tabContainer">
+      <textarea id = "output" rows = "10" cols="70" style="background-color:#666a6d; color:white"> Este es un texto de prueba que debera ser del lenguaj C#</textarea>
+  </div>
+  -->
+  <div class = "buttonContainer2"><button class="example_c" onclick="enviar()">Analizar</button></div>
+
+
+   
+   
+   <!-- Java Script
+   ================================================== -->
+
+   <script src="../webpage/js/myScript.js"></script>
+   
+</body>
+
+</html>
