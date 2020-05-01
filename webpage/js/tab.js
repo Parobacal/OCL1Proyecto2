@@ -208,5 +208,9 @@ function enviar(){
             data: contenido
         })
     };
-    fetch('http://localhost:3000/api', options);
+    fetch('http://localhost:3000/api', options).then(res => {
+        return res.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.log('ERROR'))
 }
