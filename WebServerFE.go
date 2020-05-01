@@ -2,6 +2,7 @@
  SERVIDOR GO
 */
 //Configuracion para el servidor
+
 package main
 
 import (

@@ -1,3 +1,5 @@
+//const { json } = require("express");
+
 var contador=0;
 function get_cont(){
     return contador++;
@@ -211,6 +213,7 @@ function enviar(){
     fetch('http://localhost:3000/api', options).then(res => {
         return res.json();
     })
-    .then(data => console.log(data))
+    .then(report1 => console.log(report1))
     .catch(error => console.log('ERROR'))
+    //document.getElementById("fileContents1").textContent = report1
 }

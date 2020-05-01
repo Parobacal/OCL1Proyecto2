@@ -15,4 +15,7 @@ app.use(express.json());
 app.post('/api', (request,response) => {
     console.log('Se recibio informacion desde puerto servidor GO(5000)');
     console.log(request.body);
+    response.json({
+        reporte1: 'SOY EL REPORTE1'  
+    })
 })
