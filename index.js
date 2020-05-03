@@ -22,6 +22,11 @@ app.post('/api', (request,response) => {
     })
 })
 
+
+
+
+
+//SOLO PARA PROBAR JISON QUEMADO
 /*const analizador = require("./analisis").parser;
 let entrada = "impo clasevaca;";
 let respuesta = analizador.parse(entrada);
