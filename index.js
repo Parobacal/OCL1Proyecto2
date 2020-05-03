@@ -14,8 +14,15 @@ app.use(express.json());
 //Metodo POST para recibir datos desde el index.html corriendo en el servidor de GO
 app.post('/api', (request,response) => {
     console.log('Se recibio informacion desde puerto servidor GO(5000)');
-    console.log(request.body);
+    //console.log(request.body);
+    let json = request.body;
+    console.log(json.data);
     response.json({
         reporte1: 'SOY EL REPORTE1'  
     })
 })
+
+/*const analizador = require("./analisis").parser;
+let entrada = "impo clasevaca;";
+let respuesta = analizador.parse(entrada);
+console.log(respuesta);*/

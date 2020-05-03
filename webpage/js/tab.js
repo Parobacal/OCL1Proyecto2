@@ -213,7 +213,9 @@ function enviar(){
     fetch('http://localhost:3000/api', options).then(res => {
         return res.json();
     })
-    .then(report1 => console.log(report1))
+    .then(rep => { 
+        console.log(rep.reporte1);
+        document.getElementById("fileContents1").textContent = rep.reporte1
+    })
     .catch(error => console.log('ERROR'))
-    //document.getElementById("fileContents1").textContent = report1
 }
