@@ -71,29 +71,41 @@
 [\'][^\'\n][\']                         return 'char';
 [\"]([^\'\n]|(\\\"))*[\"]               return 'string';
 <<EOF>>                                 return 'EOF';
+.                                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 
 /lex
 
 /* operator associations and precedence */
 
-%left '||'
-%left '&&'
-%left '!=' '=='
-%left '<' '>' '<=' '>='
-%left '+' '-'
-%left '*' '/'
-%left '^'
-%right '!'
-%right '%'
+%left 'Tk_||'
+%left 'Tk_&&'
+%left 'Tk_!=' 'Tk_=='
+%left 'Tk_<' 'Tk_>' 'Tk_<=' 'Tk_>='
+%left 'Tk_+' 'Tk_-'
+%left 'Tk_*' 'Tk_/'
+%left 'Tk_^'
+%right 'Tk_!'
+%right 'Tk_%'
 %left UMINUS
 
 %start inicio
 
 %% /* language grammar */
 inicio
-    : import EOF
+    : definicion EOF
         { return $1; }
+    ;
+definicion
+    : import clase
+    | clase
     ;
 import 
     : 'Tk_import' 'id' 'Tk_;'
+    ;
+clase
+    : 'Tk_class' 'id' cuerpoClase
+    ;
+cuerpoClase
+    : 'Tk_{' 'Tk_}'
+    | 'Tk_{' sentencias 'Tk_}'
     ;

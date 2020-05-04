@@ -2,6 +2,9 @@
  SERVIDOR NODE JS con uso de EXPRESS
 */
 
+//Importaciones para usar en el analizador
+//const analizador = require("./src/Ast/arbolAst").prueba;
+
 //Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
 const app = express();
@@ -27,7 +30,7 @@ app.post('/api', (request,response) => {
 
 
 //SOLO PARA PROBAR JISON QUEMADO
-/*const analizador = require("./analisis").parser;
+/*
 let entrada = "impo clasevaca;";
 let respuesta = analizador.parse(entrada);
 console.log(respuesta);*/
