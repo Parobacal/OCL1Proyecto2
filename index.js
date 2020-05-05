@@ -3,7 +3,9 @@
 */
 
 //Importaciones para usar en el analizador
-//const analizador = require("./src/Ast/arbolAst").prueba;
+const analizador = require("./analisis").parser;
+//Variables para guardar los archivos de entrada y analizarlos
+var entrada1 = "";
 
 //Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
@@ -19,18 +21,16 @@ app.post('/api', (request,response) => {
     console.log('Se recibio informacion desde puerto servidor GO(5000)');
     //console.log(request.body);
     let json = request.body;
-    console.log(json.data);
+    console.log("Se obtuvo: " + json.data);
+    entrada1 = json.data.toString();
+    analizar(entrada1);
     response.json({
         reporte1: 'SOY EL REPORTE1'  
     })
 })
 
-
-
-
-
-//SOLO PARA PROBAR JISON QUEMADO
-/*
-let entrada = "impo clasevaca;";
-let respuesta = analizador.parse(entrada);
-console.log(respuesta);*/
+//Flujo para parsear los archivos de entrada y comparar similitudes
+function analizar (entrada1){ 
+    let response1 = analizador.parse(entrada1);
+    let ast1 = response1.recorrer();
+}

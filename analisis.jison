@@ -75,6 +75,13 @@
 
 /lex
 
+%{
+	const arbolAST	= require('./src/AST/arbol/arbolAST');
+    const arrayAST	= require('./src/AST/arbol/arrayAST');
+    const nodoAST	= require('./src/AST/arbol/nodoAST');
+    const importar	= require('./src/AST/instrucciones/importar');
+    const identificador = require('./src/AST/expresiones/identificador');
+%}
 /* operator associations and precedence */
 
 %left 'Tk_||'
@@ -88,24 +95,18 @@
 %right 'Tk_%'
 %left UMINUS
 
-%start inicio
+%start INICIO
 
 %% /* language grammar */
-inicio
-    : definicion EOF
-        { return $1; }
+INICIO
+    : DEFINICION EOF
+        {return new arbolAST.arbolAST($1.getNodos());}    
     ;
-definicion
-    : import clase
-    | clase
+DEFINICION
+    : IMPORT 
+        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
     ;
-import 
-    : 'Tk_import' 'id' 'Tk_;'
-    ;
-clase
-    : 'Tk_class' 'id' cuerpoClase
-    ;
-cuerpoClase
-    : 'Tk_{' 'Tk_}'
-    | 'Tk_{' sentencias 'Tk_}'
+IMPORT 
+    : 'Tk_import' 'id' 'Tk_;' 
+        {$2 =  new identificador.identificador($2); $$ = new importar.importar($2);}
     ;
