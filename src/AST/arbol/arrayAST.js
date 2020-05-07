@@ -10,6 +10,11 @@ var arrayAST = /** @class */ (function () {
     arrayAST.prototype.getNodos = function () {
         return this.nodos;
     };
+    arrayAST.prototype.insertarArray = function (nodos) {
+        for (var i = 0; i < nodos.length; i++) {
+            this.nodos.push(nodos[i]);
+        }
+    };
     return arrayAST;
 }());
 exports.arrayAST = arrayAST;

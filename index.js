@@ -21,7 +21,7 @@ app.post('/api', (request,response) => {
     console.log('Se recibio informacion desde puerto servidor GO(5000)');
     //console.log(request.body);
     let json = request.body;
-    console.log("Se obtuvo: " + json.data);
+    console.log("Se obtuvo: " + json.data + "\n" + "----------------------\n");
     entrada1 = json.data.toString();
     analizar(entrada1);
     response.json({
@@ -32,5 +32,8 @@ app.post('/api', (request,response) => {
 //Flujo para parsear los archivos de entrada y comparar similitudes
 function analizar (entrada1){ 
     let response1 = analizador.parse(entrada1);
-    let ast1 = response1.recorrer();
+    response1.recorrer(response1.getNodos());
+    var reporte = response1.getReporteAst();
+    reporte += "</ul>";
+    console.log(reporte);
 }

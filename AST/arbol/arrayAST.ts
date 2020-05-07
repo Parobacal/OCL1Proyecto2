@@ -16,6 +16,13 @@ class arrayAST{
         return this.nodos;
     }
 
+    public insertarArray (nodos : Array<nodoAST>):void{
+        for (let i = 0; i < nodos.length; i ++)
+        {
+            this.nodos.push(nodos[i]);
+        }
+
+    }
     
 }
 

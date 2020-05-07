@@ -3,11 +3,13 @@ import {expresion} from "../definiciones/expresion";
 
 class importar implements instruccion{
 
-    id : expresion;
+    valor : expresion;
+    tipo: string;
 
     constructor(id_ : expresion)
     {
-        this.id = id_;
+        this.valor = id_;
+        this.tipo = "IMPORTAR";
     }
 
 }

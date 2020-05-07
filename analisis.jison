@@ -43,8 +43,8 @@
 "+"                                     return 'Tk_+';
 "("                                     return 'Tk_(';
 ")"                                     return 'Tk_)';
-"{"                                     return 'Tk_{';
-"}"                                     return 'Tk_}';
+"{"                                     return 'Tk_LA';
+"}"                                     return 'Tk_LC';
 /*Simbolos de operaciones relacionales y logicas*/
 ">"                                     return 'Tk_>';
 "<"                                     return 'Tk_<';
@@ -78,8 +78,8 @@
 %{
 	const arbolAST	= require('./src/AST/arbol/arbolAST');
     const arrayAST	= require('./src/AST/arbol/arrayAST');
-    const nodoAST	= require('./src/AST/arbol/nodoAST');
     const importar	= require('./src/AST/instrucciones/importar');
+    const clase	= require('./src/AST/instrucciones/clase');
     const identificador = require('./src/AST/expresiones/identificador');
 %}
 /* operator associations and precedence */
@@ -99,14 +99,42 @@
 
 %% /* language grammar */
 INICIO
-    : DEFINICION EOF
+    : DEFINICIONES EOF
         {return new arbolAST.arbolAST($1.getNodos());}    
     ;
-DEFINICION
-    : IMPORT 
+DEFINICIONES
+    : DEF_IMPORTAR DEF_CLASE
+        {$$ = $1; $$.insertarArray($2.getNodos());}
+    | DEF_CLASE
+        {$$ = $1;}
+    ;
+DEF_IMPORTAR
+    : DEF_IMPORTAR IMPORTAR
+        {$$ = $1; $$.insertar($2);}
+    | IMPORTAR
         {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
     ;
-IMPORT 
+DEF_CLASE
+    : DEF_CLASE CLASE
+        {$$ = $1; $$.insertar($2);}
+    | CLASE
+        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+    ;
+IMPORTAR 
     : 'Tk_import' 'id' 'Tk_;' 
         {$2 =  new identificador.identificador($2); $$ = new importar.importar($2);}
+    ;
+CLASE
+    : 'Tk_class' 'id' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+        {$2 =  new identificador.identificador($2); $$ = new clase.clase($2,$4.getNodos());}
+    ;
+INSTRUCCIONES
+    : INSTRUCCIONES INSTRUCCION 
+        {$$ = $1; $$.insertar($2);}
+    | INSTRUCCION
+        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+    ;
+INSTRUCCION
+    : IMPORTAR
+        {$$ = $1}
     ;

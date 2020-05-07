@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var identificador = /** @class */ (function () {
     function identificador(id_) {
-        this.identificador_ = id_;
+        this.valor = id_;
+        this.tipo = "IDENTIFICADOR";
     }
     return identificador;
 }());

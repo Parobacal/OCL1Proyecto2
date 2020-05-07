@@ -1,1 +1,7 @@
-import claseVaca;
+
+import pablo;
+
+class luigi{
+
+    import karlos;
+}

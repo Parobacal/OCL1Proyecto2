@@ -2,11 +2,13 @@ import {expresion} from "../definiciones/expresion";
 
 class identificador implements expresion{
 
-    identificador_ : string;
+    valor: string;
+    tipo : string;
     
     constructor(id_ : string)
     {
-        this.identificador_ = id_;
+        this.valor = id_;
+        this.tipo = "IDENTIFICADOR";
     }
 }
 
