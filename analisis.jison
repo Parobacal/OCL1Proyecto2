@@ -39,23 +39,23 @@
 /*Simbolos de operaciones aritmeticas*/
 "*"                                     return 'Tk_*';
 "/"                                     return 'Tk_/';
+"--"                                    return 'Tk_--';
+"++"                                    return 'Tk_++';
 "-"                                     return 'Tk_-';
 "+"                                     return 'Tk_+';
 "("                                     return 'Tk_PA';
-"--"                                    return 'Tk_--';
-"++"                                    return 'Tk_++';
 ")"                                     return 'Tk_PC';
 "{"                                     return 'Tk_LA';
 "}"                                     return 'Tk_LC';
 /*Simbolos de operaciones relacionales y logicas*/
-">"                                     return 'Tk_>';
-"^"                                     return 'Tk_^';
-"<"                                     return 'Tk_<';
-"="                                     return 'Tk_=';
 "<="                                    return 'Tk_<=';
 ">="                                    return 'Tk_>=';
+">"                                     return 'Tk_>';
+"<"                                     return 'Tk_<';
 "=="                                    return 'Tk_==';
 "!="                                    return 'Tk_!=';
+"^"                                     return 'Tk_^';
+"="                                     return 'Tk_=';
 "&&"                                    return 'Tk_&&';
 "||"                                    return 'Tk_||';
 "!"                                     return 'Tk_!';
@@ -90,6 +90,7 @@
     const relacional = require('./src/AST/expresiones/relacional');
     const logica = require('./src/AST/expresiones/logica');
     const aritmeticoUnario = require('./src/AST/expresiones/aritmeticoUnario');
+    const logicaUnario = require('./src/AST/expresiones/logicaUnario');
 %}
 /* operator associations and precedence */
 
@@ -101,6 +102,7 @@
 %left 'Tk_+' 'Tk_-'
 %left 'Tk_*' 'Tk_/'
 %left 'Tk_^' 'Tk_%'
+%left 'Tk_!'
 %left UMINUS
 %left 'Tk_++' 'Tk_--'
 
@@ -182,8 +184,8 @@ E
             {$$ = new aritmetico.aritmetico($1,$3,"%");}
     |   'Tk_-' E %prec UMINUS
             {$$ = new aritmeticoUnario.aritmeticoUnario($2, "-");}
-    //|   'Tk_!' E
-            //{}
+    |   'Tk_!' E
+            {$$ = new logicaUnario.logicaUnario($2,"!");}
     |   E 'Tk_++'
             {$$ = new aritmeticoUnario.aritmeticoUnario($1, "++");}
     |   E 'Tk_--' 
