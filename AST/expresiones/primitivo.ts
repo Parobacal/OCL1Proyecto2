@@ -11,3 +11,5 @@ class primitivo implements expresion{
         this.tipo = tipo_;
     }
 }
+
+export{primitivo};

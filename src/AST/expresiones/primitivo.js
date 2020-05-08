@@ -7,3 +7,4 @@ var primitivo = /** @class */ (function () {
     }
     return primitivo;
 }());
+exports.primitivo = primitivo;

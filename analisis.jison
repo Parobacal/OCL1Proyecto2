@@ -17,8 +17,8 @@
 "do"                                    return 'Tk_do';
 "switch"                                return 'Tk_switch';
 "for"                                   return 'Tk_for';
-"System"                                return 'Tk_System';
-"out"                                   return 'Tk_out';
+"System."                                return 'Tk_System.';
+"out."                                   return 'Tk_out.';
 "println"                               return 'Tk_println';
 /*Metodos y clases*/
 "void"                                  return 'Tk_void';
@@ -41,12 +41,15 @@
 "/"                                     return 'Tk_/';
 "-"                                     return 'Tk_-';
 "+"                                     return 'Tk_+';
-"("                                     return 'Tk_(';
-")"                                     return 'Tk_)';
+"("                                     return 'Tk_PA';
+"--"                                    return 'Tk_--';
+"++"                                    return 'Tk_++';
+")"                                     return 'Tk_PC';
 "{"                                     return 'Tk_LA';
 "}"                                     return 'Tk_LC';
 /*Simbolos de operaciones relacionales y logicas*/
 ">"                                     return 'Tk_>';
+"^"                                     return 'Tk_^';
 "<"                                     return 'Tk_<';
 "="                                     return 'Tk_=';
 "<="                                    return 'Tk_<=';
@@ -56,18 +59,18 @@
 "&&"                                    return 'Tk_&&';
 "||"                                    return 'Tk_||';
 "!"                                     return 'Tk_!';
+"%"                                     return 'Tk_%';
 /*Simbolos generales*/
 ","                                     return 'Tk_,';
 ";"                                     return 'Tk_;';
 ":"                                     return 'Tk_:';
-"."                                     return 'Tk_:';
 
 
 //TIPOS DE DATOS E IDENTIFICADORES
 \s+                   /* skip whitespace */
 ([A-Za-z]|"_")+([0-9]|[A-Za-z]|"-")*    return 'id';
-[0-9]+                                  return 'int';
-[0-9]+"."[0-9]+                         return 'double';
+[0-9]+"."([0-9]+)?\b                    return 'double';
+[0-9]+\b                                return 'int';
 [\'][^\'\n][\']                         return 'char';
 [\"]([^\'\n]|(\\\"))*[\"]               return 'string';
 <<EOF>>                                 return 'EOF';
@@ -79,10 +82,17 @@
 	const arbolAST	= require('./src/AST/arbol/arbolAST');
     const arrayAST	= require('./src/AST/arbol/arrayAST');
     const importar	= require('./src/AST/instrucciones/importar');
+    const imprimir	= require('./src/AST/instrucciones/imprimir');
     const clase	= require('./src/AST/instrucciones/clase');
     const identificador = require('./src/AST/expresiones/identificador');
+    const primitivo = require('./src/AST/expresiones/primitivo');
+    const aritmetico = require('./src/AST/expresiones/aritmetico');
+    const relacional = require('./src/AST/expresiones/relacional');
+    const logica = require('./src/AST/expresiones/logica');
+    const aritmeticoUnario = require('./src/AST/expresiones/aritmeticoUnario');
 %}
 /* operator associations and precedence */
+
 
 %left 'Tk_||'
 %left 'Tk_&&'
@@ -90,10 +100,9 @@
 %left 'Tk_<' 'Tk_>' 'Tk_<=' 'Tk_>='
 %left 'Tk_+' 'Tk_-'
 %left 'Tk_*' 'Tk_/'
-%left 'Tk_^'
-%right 'Tk_!'
-%right 'Tk_%'
+%left 'Tk_^' 'Tk_%'
 %left UMINUS
+%left 'Tk_++' 'Tk_--'
 
 %start INICIO
 
@@ -135,6 +144,58 @@ INSTRUCCIONES
         {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
     ;
 INSTRUCCION
-    : IMPORTAR
+    : IMPRIMIR
         {$$ = $1}
+    ;
+IMPRIMIR
+    :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
+            {$$ = new imprimir.imprimir($5);}
+    ;
+E
+    :   E 'Tk_>' E
+            {$$ = new relacional.relacional($1,$3,">");}
+    |   E 'Tk_<' E
+            {$$ = new relacional.relacional($1,$3,"<");}
+    |   E 'Tk_>=' E
+            {$$ = new relacional.relacional($1,$3,">=");}
+    |   E 'Tk_<=' E
+            {$$ = new relacional.relacional($1,$3,"<=");}
+    |   E 'Tk_==' E
+            {$$ = new relacional.relacional($1,$3,"==");}
+    |   E 'Tk_!=' E
+            {$$ = new relacional.relacional($1,$3,"!=");}
+    |   E 'Tk_&&' E
+            {$$ = new logica.logica($1,$3,"&&");}
+    |   E 'Tk_||' E
+            {$$ = new logica.logica($1,$3,"||");}
+    |   E 'Tk_+' E
+            {$$ = new aritmetico.aritmetico($1,$3,"+");}
+    |   E 'Tk_-' E
+            {$$ = new aritmetico.aritmetico($1,$3,"-");}
+    |   E 'Tk_*' E
+            {$$ = new aritmetico.aritmetico($1,$3,"*");}
+    |   E 'Tk_/' E
+            {$$ = new aritmetico.aritmetico($1,$3,"/");}
+    |   E 'Tk_^' E
+            {$$ = new aritmetico.aritmetico($1,$3,"^");}
+    |   E 'Tk_%' E
+            {$$ = new aritmetico.aritmetico($1,$3,"%");}
+    |   'Tk_-' E %prec UMINUS
+            {$$ = new aritmeticoUnario.aritmeticoUnario($2, "-");}
+    //|   'Tk_!' E
+            //{}
+    |   E 'Tk_++'
+            {$$ = new aritmeticoUnario.aritmeticoUnario($1, "++");}
+    |   E 'Tk_--' 
+            {$$ = new aritmeticoUnario.aritmeticoUnario($1, "--");}
+    |   'double'
+            {$$ = new primitivo.primitivo($1, "DECIMAL");}
+    |   'int'
+            {$$ = new primitivo.primitivo($1,"ENTERO");}
+    |   'string'
+            {$$ = new primitivo.primitivo($1,"CADENA");}
+    |   'char'
+            {$$ = new primitivo.primitivo($1,"CARACTER");}
+    |   'id'
+            {$$ = new identificador.identificador($1);}
     ;
