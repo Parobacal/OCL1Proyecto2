@@ -84,6 +84,7 @@
     const importar	= require('./src/AST/instrucciones/importar');
     const imprimir	= require('./src/AST/instrucciones/imprimir');
     const clase	= require('./src/AST/instrucciones/clase');
+    const declaracion	= require('./src/AST/instrucciones/declaracion');
     const identificador = require('./src/AST/expresiones/identificador');
     const primitivo = require('./src/AST/expresiones/primitivo');
     const aritmetico = require('./src/AST/expresiones/aritmetico');
@@ -152,14 +153,44 @@ INSTRUCCIONES
 INSTRUCCION
         : IMPRIMIR
                 {$$ = $1}
+        | DECLARACION
+                {$$ = $1}
         ;
 IMPRIMIR
-    :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
-            {$$ = new imprimir.imprimir($5);}
-    | error 
-        { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-    
-    ;
+        :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
+                {$$ = new imprimir.imprimir($5);}
+        | error 
+                { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+        ;
+DECLARACION
+        : TIPO_DATO LISTA_ID VALOR
+                {new declaracion.declaracion($1,$2.getNodos(),$3);}
+        ;
+TIPO_DATO
+        : 'Tk_int'
+                {$$ = $1}
+        | 'Tk_double'
+                {$$ = $1}
+        | 'Tk_char'
+                {$$ = $1}
+        | 'Tk_String'
+                {$$ = $1}
+        | 'Tk_boolean'
+                {$$ = $1}
+        ;
+
+LISTA_ID 
+        : LISTA_ID 'Tk_,' IDE
+                {$$ = $1; $$.insertar($2);}
+        | IDE
+                {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
+VALOR   
+        : 'Tk_=' E 'Tk_;'
+                {$$ = $2}
+        | 'Tk_;'
+        ; 
+
 E
     :   E 'Tk_>' E
             {$$ = new relacional.relacional($1,$3,">");}
@@ -205,6 +236,10 @@ E
             {$$ = new primitivo.primitivo($1,"CADENA");}
     |   'char'
             {$$ = new primitivo.primitivo($1,"CARACTER");}
+    |   'Tk_true'
+            {$$ = new primitivo.primitivo($1,"BOOLEANO");}
+    |   'Tk_false'
+            {$$ = new primitivo.primitivo($1,"BOOLEANO");}
     |   'id'
             {$$ = new identificador.identificador($1);}
     | error 

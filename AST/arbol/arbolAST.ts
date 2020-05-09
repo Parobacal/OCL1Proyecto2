@@ -11,6 +11,7 @@ import { logicaUnario} from "../expresiones/logicaUnario";
 import { aritmetico} from "../expresiones/aritmetico";
 import { relacional } from "../expresiones/relacional";
 import { logica } from "../expresiones/logica";
+import { declaracion } from "../instrucciones/declaracion";
 
 
 class arbolAST{
@@ -96,13 +97,188 @@ class arbolAST{
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";
                 }
-                else if (obj.valor instanceof aritmetico || relacional || logica)
+                else if (obj.valor instanceof logicaUnario)
+                {
+                    let obj2 = obj.valor as logicaUnario;
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION LOGICA";
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
+                    if (obj2.OP instanceof identificador)
+                    {
+                        let obj3 = obj2.OP as identificador;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                        this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if (obj2.OP instanceof primitivo)
+                    {
+                        let obj3 = obj2.OP as primitivo;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PRIMITIVO";
+                        this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                else if (obj.valor instanceof aritmeticoUnario)
+                {
+                    let obj2 = obj.valor as aritmeticoUnario;
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION ARITMETICA";
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
+                    if (obj2.OP instanceof identificador)
+                    {
+                        let obj3 = obj2.OP as identificador;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                        this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if (obj2.OP instanceof primitivo)
+                    {
+                        let obj3 = obj2.OP as primitivo;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PRIMITIVO";
+                        this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                else if ((obj.valor instanceof aritmetico) || (obj.valor instanceof relacional) || (obj.valor instanceof logica))
                 {
                     this.concatenacion(obj.valor);
                 }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof declaracion)
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>DECLARACION";
+                let obj = node[i] as declaracion;
+                console.log(obj);
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>TIPO";
+                this.reporteAST += "<ul><li>Tipo:" + obj.tipo + "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.valor != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
+                    if (obj.valor instanceof identificador)
+                    {
+                        let obj2 = obj.valor as identificador;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                        this.reporteAST += "<ul><li>Tipo:" + obj2.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj2.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if (obj.valor instanceof primitivo)
+                    {
+                        let obj2 = obj.valor as primitivo;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PRIMITIVO";
+                        this.reporteAST += "<ul><li>Tipo:" + obj2.tipo + "</li>";
+                        this.reporteAST += "<li>Valor:" + obj2.valor + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if (obj instanceof logicaUnario)
+                    {
+                        let obj2 = obj as logicaUnario;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION LOGICA";
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
+                        if (obj2.OP instanceof identificador)
+                        {
+                            let obj3 = obj2.OP as identificador;
+                            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                            this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                            this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                            this.reporteAST += "</ul>";
+                            this.reporteAST += "</li>";
+                            this.reporteAST += "</ul>";
+                        }
+                        else if (obj2.OP instanceof primitivo)
+                        {
+                            let obj3 = obj2.OP as primitivo;
+                            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PRIMITIVO";
+                            this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                            this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                            this.reporteAST += "</ul>";
+                            this.reporteAST += "</li>";
+                            this.reporteAST += "</ul>";
+                        }
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if (obj instanceof aritmeticoUnario)
+                    {
+                        let obj2 = obj as aritmeticoUnario;
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION ARITMETICA";
+                        this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
+                        if (obj2.OP instanceof identificador)
+                        {
+                            let obj3 = obj2.OP as identificador;
+                            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                            this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                            this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                            this.reporteAST += "</ul>";
+                            this.reporteAST += "</li>";
+                            this.reporteAST += "</ul>";
+                        }
+                        else if (obj2.OP instanceof primitivo)
+                        {
+                            let obj3 = obj2.OP as primitivo;
+                            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PRIMITIVO";
+                            this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                            this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                            this.reporteAST += "</ul>";
+                            this.reporteAST += "</li>";
+                            this.reporteAST += "</ul>";
+                        }
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
+                        this.reporteAST += "</ul>";
+                        this.reporteAST += "</li>";
+                        this.reporteAST += "</ul>";
+                    }
+                    else if ((obj.valor instanceof aritmetico) || (obj.valor instanceof relacional) || (obj.valor instanceof logica))
+                    {
+                        this.concatenacion(obj.valor);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.recorrer(obj.lista_identificadores);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
                 this.reporteAST += "</ul>";
             }
              
