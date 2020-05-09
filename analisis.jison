@@ -103,55 +103,62 @@
 %left 'Tk_*' 'Tk_/'
 %left 'Tk_^' 'Tk_%'
 %left 'Tk_!'
-%left UMINUS
+%right UMINUS
 %left 'Tk_++' 'Tk_--'
 
 %start INICIO
 
 %% /* language grammar */
 INICIO
-    : DEFINICIONES EOF
-        {return new arbolAST.arbolAST($1.getNodos());}    
-    ;
+        : DEFINICIONES EOF
+                {return new arbolAST.arbolAST($1.getNodos());}   
+        ;
 DEFINICIONES
-    : DEF_IMPORTAR DEF_CLASE
-        {$$ = $1; $$.insertarArray($2.getNodos());}
-    | DEF_CLASE
-        {$$ = $1;}
-    ;
+        : DEF_IMPORTAR DEF_CLASE
+                {$$ = $1; $$.insertarArray($2.getNodos());}
+        | DEF_CLASE
+                {$$ = $1;}
+        ;
 DEF_IMPORTAR
-    : DEF_IMPORTAR IMPORTAR
-        {$$ = $1; $$.insertar($2);}
-    | IMPORTAR
-        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
-    ;
+        : DEF_IMPORTAR IMPORTAR
+                {$$ = $1; $$.insertar($2);}
+        | IMPORTAR
+                {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
 DEF_CLASE
-    : DEF_CLASE CLASE
-        {$$ = $1; $$.insertar($2);}
-    | CLASE
-        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
-    ;
+        : DEF_CLASE CLASE
+                {$$ = $1; $$.insertar($2);}
+        | CLASE
+                {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
 IMPORTAR 
-    : 'Tk_import' 'id' 'Tk_;' 
-        {$2 =  new identificador.identificador($2); $$ = new importar.importar($2);}
-    ;
+        : 'Tk_import' IDE 'Tk_;' 
+                {$$ = new importar.importar($2);} 
+        ;
 CLASE
-    : 'Tk_class' 'id' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
-        {$2 =  new identificador.identificador($2); $$ = new clase.clase($2,$4.getNodos());}
-    ;
+        : 'Tk_class' IDE 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                { $$ = new clase.clase($2,$4.getNodos());}
+        ;
+IDE
+        : 'id'
+                {$$ = new identificador.identificador($1);}
+        ;
 INSTRUCCIONES
-    : INSTRUCCIONES INSTRUCCION 
-        {$$ = $1; $$.insertar($2);}
-    | INSTRUCCION
-        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
-    ;
+        : INSTRUCCIONES INSTRUCCION 
+                {$$ = $1; $$.insertar($2);}
+        | INSTRUCCION
+                {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
 INSTRUCCION
-    : IMPRIMIR
-        {$$ = $1}
-    ;
+        : IMPRIMIR
+                {$$ = $1}
+        ;
 IMPRIMIR
     :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
             {$$ = new imprimir.imprimir($5);}
+    | error 
+        { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+    
     ;
 E
     :   E 'Tk_>' E
@@ -200,4 +207,7 @@ E
             {$$ = new primitivo.primitivo($1,"CARACTER");}
     |   'id'
             {$$ = new identificador.identificador($1);}
+    | error 
+            { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+
     ;
