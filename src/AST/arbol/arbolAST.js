@@ -12,6 +12,7 @@ var relacional_1 = require("../expresiones/relacional");
 var logica_1 = require("../expresiones/logica");
 var declaracion_1 = require("../instrucciones/declaracion");
 var llamada_1 = require("../instrucciones/llamada");
+var asignacion_1 = require("../instrucciones/asignacion");
 var arbolAST = /** @class */ (function () {
     function arbolAST(nodos_) {
         this.nodos = nodos_;
@@ -104,6 +105,20 @@ var arbolAST = /** @class */ (function () {
                         this.reporteAST += "</ul>";
                     }
                 }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof asignacion_1.asignacion) {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>ASIGNACION";
+                var obj = node[i];
+                this.expresion(obj.identificador);
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
+                this.expresion(obj.valor);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";

@@ -13,6 +13,7 @@ import { relacional } from "../expresiones/relacional";
 import { logica } from "../expresiones/logica";
 import { declaracion } from "../instrucciones/declaracion";
 import { llamada } from "../instrucciones/llamada";
+import { asignacion } from "../instrucciones/asignacion";
 
 
 class arbolAST{
@@ -130,7 +131,21 @@ class arbolAST{
                 this.reporteAST += "</ul>";
 
             }
-             
+            else if (node[i] instanceof asignacion)
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>ASIGNACION";
+                let obj = node[i] as asignacion;
+                this.expresion(obj.identificador);
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
+                this.expresion(obj.valor);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";      
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>";
+            }    
         }
         console.log("\n----------------------");
     }

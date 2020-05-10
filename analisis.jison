@@ -90,6 +90,7 @@
     const clase	= require('./src/AST/instrucciones/clase');
     const declaracion	= require('./src/AST/instrucciones/declaracion');
     const llamada	= require('./src/AST/instrucciones/llamada');
+    const asignacion	= require('./src/AST/instrucciones/asignacion');
     const identificador = require('./src/AST/expresiones/identificador');
     const primitivo = require('./src/AST/expresiones/primitivo');
     const aritmetico = require('./src/AST/expresiones/aritmetico');
@@ -164,6 +165,8 @@ INSTRUCCION
                 {$$ = $1}
         | LLAMADA
                 {$$ = $1}
+        | ASIGNACION
+                {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
         ;
@@ -214,6 +217,10 @@ PARAMETROS_LLAMADA
                 {$$ = $1; $$.insertar($3);}
         |       E 
                 {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
+ASIGNACION
+        :       IDE 'Tk_=' E 'Tk_;'
+                {$$ = new asignacion.asignacion($1, $3);}
         ;
 
 E
