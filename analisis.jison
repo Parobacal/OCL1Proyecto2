@@ -125,6 +125,7 @@ DEFINICIONES
                 {$$ = $1; $$.insertarArray($2.getNodos());}
         | DEF_CLASE
                 {$$ = $1;}
+        
         ;
 DEF_IMPORTAR
         : DEF_IMPORTAR IMPORTAR
@@ -163,12 +164,12 @@ INSTRUCCION
                 {$$ = $1}
         | LLAMADA
                 {$$ = $1}
+        | error 
+                { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
         ;
 IMPRIMIR
         :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
                 {$$ = new imprimir.imprimir($5);}
-        | error 
-                { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
         ;
 DECLARACION
         : TIPO_DATO LISTA_ID VALOR
@@ -255,7 +256,7 @@ E
     |   'Tk_PA' E 'Tk_PC'
             {$$ = $2;}
     |   'id' 'Tk_PA' PARAM_LLAMADA 
-             {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,$3.getNodos());}
+            {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,$3.getNodos());}
     |   'double'
             {$$ = new primitivo.primitivo($1, "DECIMAL");}
     |   'int'
@@ -270,7 +271,4 @@ E
             {$$ = new primitivo.primitivo($1,"BOOLEANO");}
     |   'id'
             {$$ = new identificador.identificador($1);}
-    | error 
-            { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-
     ;
