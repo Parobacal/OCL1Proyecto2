@@ -55,12 +55,7 @@ var arbolAST = /** @class */ (function () {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IMPRIMIR";
                 var obj = node[i];
-                if ((obj.valor instanceof aritmetico_1.aritmetico) || (obj.valor instanceof relacional_1.relacional) || (obj.valor instanceof logica_1.logica)) {
-                    this.concatenacion(obj.valor);
-                }
-                else {
-                    this.expresion(obj.valor);
-                }
+                this.expresion(obj.valor);
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
@@ -79,13 +74,7 @@ var arbolAST = /** @class */ (function () {
                 //console.log(obj.valor);
                 if (obj.valor != null) {
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
-                    if ((obj.valor instanceof aritmetico_1.aritmetico) || (obj.valor instanceof relacional_1.relacional) || (obj.valor instanceof logica_1.logica)) {
-                        // console.log("SI ENTRE")
-                        this.concatenacion(obj.valor);
-                    }
-                    else {
-                        this.expresion(obj.valor);
-                    }
+                    this.expresion(obj.valor);
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";
                 }
@@ -128,25 +117,13 @@ var arbolAST = /** @class */ (function () {
             var obj2 = obj;
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION ARITMETICA";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR IZQUIERDO";
-            if ((obj2.OI instanceof aritmetico_1.aritmetico) || (obj2.OI instanceof relacional_1.relacional) || (obj2.OI instanceof logica_1.logica)) {
-                var obj3 = obj2.OI;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OI;
-                this.expresion(obj3);
-            }
+            var obj3 = obj2.OI;
+            this.expresion(obj3);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR DERECHO";
-            if ((obj2.OD instanceof aritmetico_1.aritmetico) || (obj2.OD instanceof relacional_1.relacional) || (obj2.OD instanceof logica_1.logica)) {
-                var obj3 = obj2.OD;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OD;
-                this.expresion(obj3);
-            }
+            var obj4 = obj2.OD;
+            this.expresion(obj4);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
@@ -158,25 +135,13 @@ var arbolAST = /** @class */ (function () {
             var obj2 = obj;
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION RELACIONAL";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR IZQUIERDO";
-            if ((obj2.OI instanceof aritmetico_1.aritmetico) || (obj2.OI instanceof relacional_1.relacional) || (obj2.OI instanceof logica_1.logica)) {
-                var obj3 = obj2.OI;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OI;
-                this.expresion(obj3);
-            }
+            var obj3 = obj2.OI;
+            this.expresion(obj3);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR DERECHO";
-            if ((obj2.OD instanceof aritmetico_1.aritmetico) || (obj2.OD instanceof relacional_1.relacional) || (obj2.OD instanceof logica_1.logica)) {
-                var obj3 = obj2.OD;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OD;
-                this.expresion(obj3);
-            }
+            var obj4 = obj2.OD;
+            this.expresion(obj4);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";
@@ -188,25 +153,13 @@ var arbolAST = /** @class */ (function () {
             var obj2 = obj;
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION LOGICA";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR IZQUIERDO";
-            if ((obj2.OI instanceof aritmetico_1.aritmetico) || (obj2.OI instanceof relacional_1.relacional) || (obj2.OI instanceof logica_1.logica)) {
-                var obj3 = obj2.OI;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OI;
-                this.expresion(obj3);
-            }
+            var obj3 = obj2.OI;
+            this.expresion(obj3);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR DERECHO";
-            if ((obj2.OD instanceof aritmetico_1.aritmetico) || (obj2.OD instanceof relacional_1.relacional) || (obj2.OD instanceof logica_1.logica)) {
-                var obj3 = obj2.OD;
-                this.concatenacion(obj3);
-            }
-            else {
-                var obj3 = obj2.OD;
-                this.expresion(obj3);
-            }
+            var obj4 = obj2.OD;
+            this.expresion(obj4);
             this.reporteAST += "</li>";
             this.reporteAST += "</ul>";
             this.reporteAST += "<ul><li>OPERADOR:" + obj2.operador + "</li>";

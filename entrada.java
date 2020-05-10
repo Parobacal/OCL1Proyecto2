@@ -1,4 +1,4 @@
-
+import jaja;
 
 class clase1{
     ganar(actuar(), actuar2(palabra,boca,pizza));
