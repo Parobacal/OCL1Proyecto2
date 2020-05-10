@@ -10,8 +10,8 @@ class llamada implements instruccion{
 
     constructor(valor_ : expresion, listado : Array<nodoAST>)
     {
-        this.lista_parametros = listado;
         this.nombre = valor_;
+        this.lista_parametros = listado;
     }
 
 }

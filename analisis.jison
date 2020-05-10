@@ -254,6 +254,8 @@ E
             {$$ = new aritmeticoUnario.aritmeticoUnario($1, "--");}
     |   'Tk_PA' E 'Tk_PC'
             {$$ = $2;}
+    |   'id' 'Tk_PA' PARAM_LLAMADA 
+             {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,$3.getNodos());}
     |   'double'
             {$$ = new primitivo.primitivo($1, "DECIMAL");}
     |   'int'

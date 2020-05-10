@@ -1,12 +1,11 @@
 
 
 class clase1{
-    ganar();
+    ganar(actuar(), actuar2(palabra,boca,pizza));
     ganar(2,5);
-    System.out.println(x);
-    int n = 1;
-
-    
+    System.out.println(ganar());
+    int n = probar(a,b);
+    System.out.println("si se logro");
 }
 
 

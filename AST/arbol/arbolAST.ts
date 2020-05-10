@@ -122,9 +122,11 @@ class arbolAST{
             {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>LLAMADA";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION O METODO";
                 let obj = node[i] as llamada;
                 this.expresion(obj.nombre);
-                //console.log(obj.nombre);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
                 if (obj.lista_parametros != null)
                 {
                     for (let i = 0; i < obj.lista_parametros.length; i ++)
@@ -315,13 +317,16 @@ class arbolAST{
         {
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>LLAMADA";
-            this.expresion(obj.nombre);
+            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION O METODO";
+            let obj2 = obj as llamada;
+            this.expresion(obj2.nombre);
+            this.reporteAST += "</li></ul>";
             //console.log(obj.nombre);
-            if (obj.lista_parametros != null)
+            if (obj2.lista_parametros != null)
             {
-                for (let i = 0; i < obj.lista_parametros.length; i ++)
+                for (let i = 0; i < obj2.lista_parametros.length; i ++)
                 {
-                    let obj3 = obj.lista_parametros[i];
+                    let obj3 = obj2.lista_parametros[i];
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PARAMETRO";
                     this.expresion(obj3);
                     this.reporteAST += "</li>";

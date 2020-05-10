@@ -101,9 +101,11 @@ var arbolAST = /** @class */ (function () {
             else if (node[i] instanceof llamada_1.llamada) {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>LLAMADA";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION O METODO";
                 var obj = node[i];
                 this.expresion(obj.nombre);
-                //console.log(obj.nombre);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
                 if (obj.lista_parametros != null) {
                     for (var i_2 = 0; i_2 < obj.lista_parametros.length; i_2++) {
                         var obj3 = obj.lista_parametros[i_2];
@@ -258,11 +260,14 @@ var arbolAST = /** @class */ (function () {
         else if (obj instanceof llamada_1.llamada) {
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
             this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>LLAMADA";
-            this.expresion(obj.nombre);
+            this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION O METODO";
+            var obj2 = obj;
+            this.expresion(obj2.nombre);
+            this.reporteAST += "</li></ul>";
             //console.log(obj.nombre);
-            if (obj.lista_parametros != null) {
-                for (var i = 0; i < obj.lista_parametros.length; i++) {
-                    var obj3 = obj.lista_parametros[i];
+            if (obj2.lista_parametros != null) {
+                for (var i = 0; i < obj2.lista_parametros.length; i++) {
+                    var obj3 = obj2.lista_parametros[i];
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PARAMETRO";
                     this.expresion(obj3);
                     this.reporteAST += "</li>";

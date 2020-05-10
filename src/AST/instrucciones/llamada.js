@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var llamada = /** @class */ (function () {
     function llamada(valor_, listado) {
-        this.lista_parametros = listado;
         this.nombre = valor_;
+        this.lista_parametros = listado;
     }
     return llamada;
 }());
