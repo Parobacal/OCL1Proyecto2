@@ -73,10 +73,10 @@ class arbolAST{
             }
             else if (node[i] instanceof imprimir)
             {
+                console.log(node[i]);
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IMPRIMIR";
                 let obj = node[i] as imprimir;
-                console.log(obj.tipo);
                 if (obj.valor instanceof identificador)
                 {
                     let obj2 = obj.valor as identificador;
@@ -181,6 +181,7 @@ class arbolAST{
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
+                console.log(obj.valor);
                 if (obj.valor != null)
                 {
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
@@ -204,9 +205,9 @@ class arbolAST{
                         this.reporteAST += "</li>";
                         this.reporteAST += "</ul>";
                     }
-                    else if (obj instanceof logicaUnario)
+                    else if (obj.valor instanceof logicaUnario)
                     {
-                        let obj2 = obj as logicaUnario;
+                        let obj2 = obj.valor as logicaUnario;
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION LOGICA";
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
                         if (obj2.OP instanceof identificador)
@@ -236,9 +237,9 @@ class arbolAST{
                         this.reporteAST += "</li>";
                         this.reporteAST += "</ul>";
                     }
-                    else if (obj instanceof aritmeticoUnario)
+                    else if (obj.valor instanceof aritmeticoUnario)
                     {
-                        let obj2 = obj as aritmeticoUnario;
+                        let obj2 = obj.valor as aritmeticoUnario;
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION ARITMETICA";
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
                         if (obj2.OP instanceof identificador)
@@ -268,14 +269,25 @@ class arbolAST{
                         this.reporteAST += "</li>";
                         this.reporteAST += "</ul>";
                     }
+                    
                     else if ((obj.valor instanceof aritmetico) || (obj.valor instanceof relacional) || (obj.valor instanceof logica))
                     {
+                        console.log("SI ENTRE")
                         this.concatenacion(obj.valor);
                     }
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";
                 }
-                this.recorrer(obj.lista_identificadores);
+                for (let i = 0; i < obj.lista_identificadores.length; i ++)
+                {
+                    let obj3 = obj.lista_identificadores[i] as identificador;
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                    this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                    this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 

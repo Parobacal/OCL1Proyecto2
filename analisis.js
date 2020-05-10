@@ -117,10 +117,10 @@ case 16: case 52:
  console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
 break;
 case 17:
-new declaracion.declaracion($$[$0-2],$$[$0-1].getNodos(),$$[$0]);
+this.$ = new declaracion.declaracion($$[$0-2],$$[$0-1].getNodos(),$$[$0]);
 break;
 case 23:
-this.$ = $$[$0-2]; this.$.insertar($$[$0-1]);
+this.$ = $$[$0-2]; this.$.insertar($$[$0]);
 break;
 case 25:
 this.$ = $$[$0-1]
@@ -446,7 +446,7 @@ _handle_error:
     return true;
 }};
 
-	const arbolAST	= require('./src/AST/arbol/arbolAST');
+    const arbolAST	= require('./src/AST/arbol/arbolAST');
     const arrayAST	= require('./src/AST/arbol/arrayAST');
     const importar	= require('./src/AST/instrucciones/importar');
     const imprimir	= require('./src/AST/instrucciones/imprimir');
@@ -889,15 +889,15 @@ case 49:return 'Tk_:';
 break;
 case 50:/* skip whitespace */
 break;
-case 51:return 17;
+case 51:return 56;
 break;
-case 52:return 54;
+case 52:return 57;
 break;
-case 53:return 55;
+case 53:return 17;
 break;
-case 54:return 57;
+case 54:return 54;
 break;
-case 55:return 56;
+case 55:return 55;
 break;
 case 56:return 5;
 break;
@@ -905,7 +905,7 @@ case 57: console.error('Este es un error léxico: ' + yy_.yytext + ', en la line
 break;
 }
 },
-rules: [/^(?:(\/\/.*\r\n)|(\/\/.*\n)|(\/\/.*\r))/,/^(?:\/\*\/*([^*/]|[^*]\/|\*[^/])*\*\*\*\/)/,/^(?:if\b)/,/^(?:else\b)/,/^(?:while\b)/,/^(?:do\b)/,/^(?:switch\b)/,/^(?:for\b)/,/^(?:System\.)/,/^(?:out\.)/,/^(?:println\b)/,/^(?:void\b)/,/^(?:class\b)/,/^(?:import\b)/,/^(?:case\b)/,/^(?:default\b)/,/^(?:return\b)/,/^(?:int\b)/,/^(?:double\b)/,/^(?:String\b)/,/^(?:char\b)/,/^(?:boolean\b)/,/^(?:int\b)/,/^(?:true\b)/,/^(?:false\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:--)/,/^(?:\+\+)/,/^(?:-)/,/^(?:\+)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:<=)/,/^(?:>=)/,/^(?:>)/,/^(?:<)/,/^(?:==)/,/^(?:!=)/,/^(?:\^)/,/^(?:=)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:!)/,/^(?:%)/,/^(?:,)/,/^(?:;)/,/^(?::)/,/^(?:\s+)/,/^(?:([A-Za-z]|_)+([0-9]|[A-Za-z]|-)*)/,/^(?:[0-9]+\.([0-9]+)?\b)/,/^(?:[0-9]+\b)/,/^(?:[\'][^\'\n][\'])/,/^(?:[\"]([^\'\n]|(\\"))*[\"])/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:(\/\/.*\r\n)|(\/\/.*\n)|(\/\/.*\r))/,/^(?:\/\*\/*([^*/]|[^*]\/|\*[^/])*\*\*\*\/)/,/^(?:if\b)/,/^(?:else\b)/,/^(?:while\b)/,/^(?:do\b)/,/^(?:switch\b)/,/^(?:for\b)/,/^(?:System\.)/,/^(?:out\.)/,/^(?:println\b)/,/^(?:void\b)/,/^(?:class\b)/,/^(?:import\b)/,/^(?:case\b)/,/^(?:default\b)/,/^(?:return\b)/,/^(?:int\b)/,/^(?:double\b)/,/^(?:String\b)/,/^(?:char\b)/,/^(?:boolean\b)/,/^(?:int\b)/,/^(?:true\b)/,/^(?:false\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:--)/,/^(?:\+\+)/,/^(?:-)/,/^(?:\+)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:<=)/,/^(?:>=)/,/^(?:>)/,/^(?:<)/,/^(?:==)/,/^(?:!=)/,/^(?:\^)/,/^(?:=)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:!)/,/^(?:%)/,/^(?:,)/,/^(?:;)/,/^(?::)/,/^(?:\s+)/,/^(?:[\"]([^\"\n]|(\\"))*[\"])/,/^(?:[\'][^\'\n][\'])/,/^(?:["_"A-Za-z]+["_"0-9A-Za-z]*)/,/^(?:[0-9]+\.([0-9]+)?\b)/,/^(?:[0-9]+\b)/,/^(?:$)/,/^(?:.)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57],"inclusive":true}}
 });
 return lexer;

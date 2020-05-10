@@ -68,18 +68,22 @@
 
 //TIPOS DE DATOS E IDENTIFICADORES
 \s+                   /* skip whitespace */
-([A-Za-z]|"_")+([0-9]|[A-Za-z]|"-")*    return 'id';
+
+[\"]([^\"\n]|(\\\"))*[\"]               return 'string';
+[\'][^\'\n][\']                         return 'char';
+["_"A-Za-z]+["_"0-9A-Za-z]*             return 'id';
 [0-9]+"."([0-9]+)?\b                    return 'double';
 [0-9]+\b                                return 'int';
-[\'][^\'\n][\']                         return 'char';
-[\"]([^\'\n]|(\\\"))*[\"]               return 'string';
+
+
+
 <<EOF>>                                 return 'EOF';
 .                                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 
 /lex
 
 %{
-	const arbolAST	= require('./src/AST/arbol/arbolAST');
+    const arbolAST	= require('./src/AST/arbol/arbolAST');
     const arrayAST	= require('./src/AST/arbol/arrayAST');
     const importar	= require('./src/AST/instrucciones/importar');
     const imprimir	= require('./src/AST/instrucciones/imprimir');
@@ -164,7 +168,7 @@ IMPRIMIR
         ;
 DECLARACION
         : TIPO_DATO LISTA_ID VALOR
-                {new declaracion.declaracion($1,$2.getNodos(),$3);}
+                {$$ = new declaracion.declaracion($1,$2.getNodos(),$3);}
         ;
 TIPO_DATO
         : 'Tk_int'
@@ -181,7 +185,7 @@ TIPO_DATO
 
 LISTA_ID 
         : LISTA_ID 'Tk_,' IDE
-                {$$ = $1; $$.insertar($2);}
+                {$$ = $1; $$.insertar($3);}
         | IDE
                 {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
         ;
@@ -237,7 +241,7 @@ E
     |   'char'
             {$$ = new primitivo.primitivo($1,"CARACTER");}
     |   'Tk_true'
-            {$$ = new primitivo.primitivo($1,"BOOLEANO");}
+           {$$ = new primitivo.primitivo($1,"BOOLEANO");}
     |   'Tk_false'
             {$$ = new primitivo.primitivo($1,"BOOLEANO");}
     |   'id'

@@ -60,10 +60,10 @@ var arbolAST = /** @class */ (function () {
                 console.log(obj2.valor);
             }
             else if (node[i] instanceof imprimir_1.imprimir) {
+                console.log(node[i]);
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IMPRIMIR";
                 var obj = node[i];
-                console.log(obj.tipo);
                 if (obj.valor instanceof identificador_1.identificador) {
                     var obj2 = obj.valor;
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
@@ -158,6 +158,7 @@ var arbolAST = /** @class */ (function () {
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
+                console.log(obj.valor);
                 if (obj.valor != null) {
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>VALOR";
                     if (obj.valor instanceof identificador_1.identificador) {
@@ -178,8 +179,8 @@ var arbolAST = /** @class */ (function () {
                         this.reporteAST += "</li>";
                         this.reporteAST += "</ul>";
                     }
-                    else if (obj instanceof logicaUnario_1.logicaUnario) {
-                        var obj2 = obj;
+                    else if (obj.valor instanceof logicaUnario_1.logicaUnario) {
+                        var obj2 = obj.valor;
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION LOGICA";
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
                         if (obj2.OP instanceof identificador_1.identificador) {
@@ -207,8 +208,8 @@ var arbolAST = /** @class */ (function () {
                         this.reporteAST += "</li>";
                         this.reporteAST += "</ul>";
                     }
-                    else if (obj instanceof aritmeticoUnario_1.aritmeticoUnario) {
-                        var obj2 = obj;
+                    else if (obj.valor instanceof aritmeticoUnario_1.aritmeticoUnario) {
+                        var obj2 = obj.valor;
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERACION ARITMETICA";
                         this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>OPERADOR UNICO";
                         if (obj2.OP instanceof identificador_1.identificador) {
@@ -237,12 +238,21 @@ var arbolAST = /** @class */ (function () {
                         this.reporteAST += "</ul>";
                     }
                     else if ((obj.valor instanceof aritmetico_1.aritmetico) || (obj.valor instanceof relacional_1.relacional) || (obj.valor instanceof logica_1.logica)) {
+                        console.log("SI ENTRE");
                         this.concatenacion(obj.valor);
                     }
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";
                 }
-                this.recorrer(obj.lista_identificadores);
+                for (var i_1 = 0; i_1 < obj.lista_identificadores.length; i_1++) {
+                    var obj3 = obj.lista_identificadores[i_1];
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                    this.reporteAST += "<ul><li>Tipo:" + obj3.tipo + "</li>";
+                    this.reporteAST += "<li>Valor:" + obj3.valor + "</li>";
+                    this.reporteAST += "</ul>";
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
