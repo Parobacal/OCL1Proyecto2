@@ -89,6 +89,7 @@
     const imprimir	= require('./src/AST/instrucciones/imprimir');
     const clase	= require('./src/AST/instrucciones/clase');
     const declaracion	= require('./src/AST/instrucciones/declaracion');
+    const llamada	= require('./src/AST/instrucciones/llamada');
     const identificador = require('./src/AST/expresiones/identificador');
     const primitivo = require('./src/AST/expresiones/primitivo');
     const aritmetico = require('./src/AST/expresiones/aritmetico');
@@ -110,6 +111,7 @@
 %left 'Tk_!'
 %right UMINUS
 %left 'Tk_++' 'Tk_--'
+%left 'Tk_PA' 'Tk_PC'
 
 %start INICIO
 
@@ -159,6 +161,8 @@ INSTRUCCION
                 {$$ = $1}
         | DECLARACION
                 {$$ = $1}
+        | LLAMADA
+                {$$ = $1}
         ;
 IMPRIMIR
         :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'
@@ -194,6 +198,22 @@ VALOR
                 {$$ = $2}
         | 'Tk_;'
         ; 
+LLAMADA
+        : IDE 'Tk_PA' PARAM_LLAMADA 'Tk_;'
+                {$$ = new llamada.llamada($1,$3.getNodos());}
+        ;
+PARAM_LLAMADA
+        :       PARAMETROS_LLAMADA 'Tk_PC'
+                        {$$ = $1}
+        |       'Tk_PC'
+                        {$$ = new arrayAST.arrayAST();}
+        ;
+PARAMETROS_LLAMADA
+        :       PARAMETROS_LLAMADA 'Tk_,' E
+                {$$ = $1; $$.insertar($3);}
+        |       E 
+                {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
 
 E
     :   E 'Tk_>' E
@@ -232,6 +252,8 @@ E
             {$$ = new aritmeticoUnario.aritmeticoUnario($1, "++");}
     |   E 'Tk_--' 
             {$$ = new aritmeticoUnario.aritmeticoUnario($1, "--");}
+    |   'Tk_PA' E 'Tk_PC'
+            {$$ = $2;}
     |   'double'
             {$$ = new primitivo.primitivo($1, "DECIMAL");}
     |   'int'
