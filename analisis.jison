@@ -91,6 +91,7 @@
     const clase	= require('./src/AST/instrucciones/clase');
     const declaracion	= require('./src/AST/instrucciones/declaracion');
     const llamada	= require('./src/AST/instrucciones/llamada');
+    const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
     const instruccionWHILE	= require('./src/AST/instrucciones/instruccionWHILE');
     const instruccionDOWHILE	= require('./src/AST/instrucciones/instruccionDOWHILE');
@@ -180,6 +181,8 @@ INSTRUCCION
         | WHILE
                 {$$ = $1}
         | DOWHILE
+                {$$ = $1}
+        | FUNCION
                 {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
@@ -275,6 +278,26 @@ DOWHILE
         |       'Tk_do' 'Tk_LA' 'Tk_LC' 'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_;'
                         {$$ = new instruccionDOWHILE.instruccionDOWHILE(null,$6);}
         ;
+FUNCION    
+        :       TIPO_DATO IDE 'Tk_PA' PARAMETROS_FM 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new funcion.funcion($1,$2,$4.getNodos(),$7.getNodos());}
+        |       TIPO_DATO IDE 'Tk_PA' 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new funcion.funcion($1,$2,null,$6.getNodos());}
+        |       TIPO_DATO IDE 'Tk_PA' PARAMETROS_FM 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new funcion.funcion($1,$2,$4.getNodos(),null);}
+        |       TIPO_DATO IDE 'Tk_PA' 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new funcion.funcion($1,$2,null,null);}
+        ;
+PARAMETROS_FM
+        :       PARAMETROS_FM 'Tk_,' PARAMETRO
+                        {$$ = $1; $$.insertar($3);}
+        |       PARAMETRO 
+                        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
+PARAMETRO
+        :       TIPO_DATO 'id'
+                        {$$ = new primitivo.primitivo($2,$1);}
+        ;
 E
     :   E 'Tk_>' E
             {$$ = new relacional.relacional($1,$3,">");}
@@ -319,17 +342,17 @@ E
     |   'id' 'Tk_PA' 'Tk_PC'
             {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,null);}
     |   'double'
-            {$$ = new primitivo.primitivo($1, "DECIMAL");}
+            {$$ = new primitivo.primitivo($1, "double");}
     |   'int'
-            {$$ = new primitivo.primitivo($1,"ENTERO");}
+            {$$ = new primitivo.primitivo($1,"int");}
     |   'string'
-            {$$ = new primitivo.primitivo($1,"CADENA");}
+            {$$ = new primitivo.primitivo($1,"string");}
     |   'char'
-            {$$ = new primitivo.primitivo($1,"CARACTER");}
+            {$$ = new primitivo.primitivo($1,"char");}
     |   'Tk_true'
-           {$$ = new primitivo.primitivo($1,"BOOLEANO");}
+           {$$ = new primitivo.primitivo($1,"boolean");}
     |   'Tk_false'
-            {$$ = new primitivo.primitivo($1,"BOOLEANO");}
+            {$$ = new primitivo.primitivo($1,"boolean");}
     |   'id'
             {$$ = new identificador.identificador($1);}
     ;

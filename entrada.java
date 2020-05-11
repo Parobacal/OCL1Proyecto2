@@ -1,19 +1,27 @@
 
 import poder;
 class clase2{
-    do{
-        System.out.println("hola mundo");
-        int a,b,c;
-    }while (geti(2,4));
-    while(booleano){
-
-    }
-    System.out.println("que pex");
-    do
+    
+    double prueba(){}
+    String prueba2 (double d1, double d2, double d3)
     {
 
     }
-    while(booleano && fidelcastro);
+
+    boolean prueba3()
+    {
+        System.out.println("Si traigo instrucciones");
+    }
+
+    int prueba4(int j, String h)
+    {
+        do
+        {
+    
+        }
+        while(booleano && fidelcastro);
+    }
+    System.out.println("Si funciona");
 }
 
 class clase3{

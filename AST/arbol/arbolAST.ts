@@ -19,6 +19,7 @@ import { instruccionELSE } from "../instrucciones/instruccionELSE";
 import { instruccionELSEIF } from "../instrucciones/instruccionELSEIF";
 import { instruccionWHILE } from "../instrucciones/instruccionWHILE";
 import { instruccionDOWHILE } from "../instrucciones/instruccionDOWHILE";
+import { funcion } from "../instrucciones/funcion";
 
 class arbolAST{
 
@@ -244,6 +245,38 @@ class arbolAST{
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 
                 this.reporteAST += "</ul>";                
+            }
+            else if (node[i] instanceof funcion) 
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION";
+                let obj = node[i] as funcion;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>TIPO";
+                this.reporteAST += "<ul><li>" + obj.tipo + "</li></ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.expresion(obj.identificador);
+
+                if(obj.parametros != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PARAMETROS";
+                    for (let i = 0; i < obj.parametros.length; i ++){
+                        this.expresion(obj.parametros[i]);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if(obj.instrucciones != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>";  
             }
         }
         console.log("\n----------------------");

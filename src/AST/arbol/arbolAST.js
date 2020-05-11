@@ -17,6 +17,7 @@ var asignacion_1 = require("../instrucciones/asignacion");
 var instruccionELSEIF_1 = require("../instrucciones/instruccionELSEIF");
 var instruccionWHILE_1 = require("../instrucciones/instruccionWHILE");
 var instruccionDOWHILE_1 = require("../instrucciones/instruccionDOWHILE");
+var funcion_1 = require("../instrucciones/funcion");
 var arbolAST = /** @class */ (function () {
     function arbolAST(nodos_) {
         this.nodos = nodos_;
@@ -206,6 +207,34 @@ var arbolAST = /** @class */ (function () {
                 this.expresion(obj.condicion);
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof funcion_1.funcion) {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>FUNCION";
+                var obj = node[i];
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>TIPO";
+                this.reporteAST += "<ul><li>" + obj.tipo + "</li></ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.expresion(obj.identificador);
+                if (obj.parametros != null) {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PARAMETROS";
+                    for (var i_3 = 0; i_3 < obj.parametros.length; i_3++) {
+                        this.expresion(obj.parametros[i_3]);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if (obj.instrucciones != null) {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";
