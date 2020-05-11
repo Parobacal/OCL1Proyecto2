@@ -1,4 +1,5 @@
 
+
 /* descripcion: Parsea archivos de entrada java. */
 
 /* Análisis Léxico: Expresiones regulares del lenguaje */
@@ -147,6 +148,8 @@ IMPORTAR
 CLASE
         : 'Tk_class' IDE 'Tk_LA' INSTRUCCIONES 'Tk_LC'
                 { $$ = new clase.clase($2,$4.getNodos());}
+        | 'Tk_class' IDE 'Tk_LA' 'Tk_LC'
+                { $$ = new clase.clase($2,null);}
         ;
 IDE
         : 'id'
@@ -175,8 +178,10 @@ IMPRIMIR
                 {$$ = new imprimir.imprimir($5);}
         ;
 DECLARACION
-        : TIPO_DATO LISTA_ID VALOR
-                {$$ = new declaracion.declaracion($1,$2.getNodos(),$3);}
+        : TIPO_DATO LISTA_ID 'Tk_=' E 'Tk_;'
+                {$$ = new declaracion.declaracion($1,$2.getNodos(),$4);}
+        | TIPO_DATO LISTA_ID 'Tk_;'
+                {$$ = new declaracion.declaracion($1,$2.getNodos(),null);}
         ;
 TIPO_DATO
         : 'Tk_int'
@@ -197,20 +202,11 @@ LISTA_ID
         | IDE
                 {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
         ;
-VALOR   
-        : 'Tk_=' E 'Tk_;'
-                {$$ = $2}
-        | 'Tk_;'
-        ; 
 LLAMADA
-        : IDE 'Tk_PA' PARAM_LLAMADA 'Tk_;'
+        : IDE 'Tk_PA' PARAMETROS_LLAMADA 'Tk_PC' 'Tk_;'
                 {$$ = new llamada.llamada($1,$3.getNodos());}
-        ;
-PARAM_LLAMADA
-        :       PARAMETROS_LLAMADA 'Tk_PC'
-                        {$$ = $1}
-        |       'Tk_PC'
-                        {$$ = new arrayAST.arrayAST();}
+        | IDE 'Tk_PA' 'Tk_PC' 'Tk_;'
+                {$$ = new llamada.llamada($1,null);}
         ;
 PARAMETROS_LLAMADA
         :       PARAMETROS_LLAMADA 'Tk_,' E
@@ -220,9 +216,8 @@ PARAMETROS_LLAMADA
         ;
 ASIGNACION
         :       IDE 'Tk_=' E 'Tk_;'
-                {$$ = new asignacion.asignacion($1, $3);}
+                {$$ = new asignacion.asignacion($1,$3);}
         ;
-
 E
     :   E 'Tk_>' E
             {$$ = new relacional.relacional($1,$3,">");}
@@ -262,8 +257,10 @@ E
             {$$ = new aritmeticoUnario.aritmeticoUnario($1, "--");}
     |   'Tk_PA' E 'Tk_PC'
             {$$ = $2;}
-    |   'id' 'Tk_PA' PARAM_LLAMADA 
+    |   'id' 'Tk_PA' PARAMETROS_LLAMADA 'Tk_PC'
             {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,$3.getNodos());}
+    |   'id' 'Tk_PA' 'Tk_PC'
+            {$1 = new identificador.identificador($1); $$ = new llamada.llamada($1,null);}
     |   'double'
             {$$ = new primitivo.primitivo($1, "DECIMAL");}
     |   'int'

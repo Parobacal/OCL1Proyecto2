@@ -36,13 +36,12 @@ class arbolAST{
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CLASE";
                 let obj = node[i] as clase;
-                //console.log(obj.tipo);
                 let obj2 = obj.valor as identificador;
                 this.expresion(obj2);
-                //console.log(obj2.tipo);
-                //console.log(obj2.valor);
-                //console.log(obj.instrucciones.length);
-                this.recorrer(obj.instrucciones);
+                if (obj.instrucciones != null)
+                {
+                    this.recorrer(obj.instrucciones);
+                }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 
