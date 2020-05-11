@@ -13,8 +13,12 @@ import { relacional } from "../expresiones/relacional";
 import { logica } from "../expresiones/logica";
 import { declaracion } from "../instrucciones/declaracion";
 import { llamada } from "../instrucciones/llamada";
+import { instruccionIF } from "../instrucciones/instruccionIF";
 import { asignacion } from "../instrucciones/asignacion";
-
+import { instruccionELSE } from "../instrucciones/instruccionELSE";
+import { instruccionELSEIF } from "../instrucciones/instruccionELSEIF";
+import { instruccionWHILE } from "../instrucciones/instruccionWHILE";
+import { instruccionDOWHILE } from "../instrucciones/instruccionDOWHILE";
 
 class arbolAST{
 
@@ -144,7 +148,103 @@ class arbolAST{
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 
                 this.reporteAST += "</ul>";
-            }    
+            } 
+            else if (node[i] instanceof instruccionIF)
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA IF";
+                let obj = node[i] as instruccionIF;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION IF";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.instrucciones != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES IF";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if (obj.elseif != null)
+                {
+                    this.recorrer(obj.elseif);
+                }
+                if (obj.else != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA ELSE";
+                    let obj2 = obj.else as instruccionELSE;
+                    if(obj2.instrucciones != null)
+                    {
+                        this.recorrer(obj2.instrucciones);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>";
+            } 
+            else if (node[i] instanceof instruccionELSEIF) 
+            {
+                let obj = node[i] as instruccionELSEIF;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA ELSE IF";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION ELSE IF";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.instrucciones != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES ELSE IF";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            } 
+            else if (node[i] instanceof instruccionWHILE) 
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA WHILE";
+                let obj = node[i] as instruccionWHILE;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION WHILE";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";   
+                if(obj.instrucciones != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES WHILE";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>";                
+            } 
+            else if (node[i] instanceof instruccionDOWHILE) 
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA DO WHILE";
+                let obj = node[i] as instruccionDOWHILE;
+                if(obj.instrucciones != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES DO WHILE";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION DO WHILE";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";   
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>";                
+            }
         }
         console.log("\n----------------------");
     }

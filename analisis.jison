@@ -92,6 +92,11 @@
     const declaracion	= require('./src/AST/instrucciones/declaracion');
     const llamada	= require('./src/AST/instrucciones/llamada');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
+    const instruccionWHILE	= require('./src/AST/instrucciones/instruccionWHILE');
+    const instruccionDOWHILE	= require('./src/AST/instrucciones/instruccionDOWHILE');
+    const instruccionIF	= require('./src/AST/instrucciones/instruccionIF');
+    const instruccionELSEIF	= require('./src/AST/instrucciones/instruccionELSEIF');
+    const instruccionELSE	= require('./src/AST/instrucciones/instruccionELSE');
     const identificador = require('./src/AST/expresiones/identificador');
     const primitivo = require('./src/AST/expresiones/primitivo');
     const aritmetico = require('./src/AST/expresiones/aritmetico');
@@ -170,6 +175,12 @@ INSTRUCCION
                 {$$ = $1}
         | ASIGNACION
                 {$$ = $1}
+        | IF
+                {$$ = $1}
+        | WHILE
+                {$$ = $1}
+        | DOWHILE
+                {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
         ;
@@ -217,6 +228,52 @@ PARAMETROS_LLAMADA
 ASIGNACION
         :       IDE 'Tk_=' E 'Tk_;'
                 {$$ = new asignacion.asignacion($1,$3);}
+        ;
+IF
+        :      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' 'Tk_else' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' 'Tk_else' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,null);}
+        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionIF.instruccionIF($3,null,null,null);}
+        ;
+METODOS_ELSEIF
+        :       METODOS_ELSEIF ELSEIF
+                        {$$ = $1; $$.insertar($2);}
+        |       ELSEIF
+                        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
+ELSEIF
+        :       'Tk_else' 'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionELSEIF.instruccionELSEIF($4,$7.getNodos());}
+        |       'Tk_else' 'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionELSEIF.instruccionELSEIF($4,null);}
+        ;
+WHILE
+        :       'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionWHILE.instruccionWHILE($3,$6.getNodos());}
+        |       'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionWHILE.instruccionWHILE($3,null);}
+        ;
+DOWHILE 
+        :       'Tk_do' 'Tk_LA' INSTRUCCIONES 'Tk_LC' 'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_;'
+                        {$$ = new instruccionDOWHILE.instruccionDOWHILE($3.getNodos(),$7);}
+        |       'Tk_do' 'Tk_LA' 'Tk_LC' 'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_;'
+                        {$$ = new instruccionDOWHILE.instruccionDOWHILE(null,$6);}
         ;
 E
     :   E 'Tk_>' E
