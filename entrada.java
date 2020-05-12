@@ -1,7 +1,10 @@
 
 class clase2{
     
-    double prueba(){}
+    double prueba(){
+
+        return juan + luis;
+    }
     void main()
     {
         continue;
@@ -20,6 +23,7 @@ class clase2{
     {
         System.out.println(obj);
         System.out.println(obj + 2);
+        return;
     }
     
 }

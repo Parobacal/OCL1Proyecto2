@@ -98,6 +98,7 @@
     const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
     const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
+    const instruccionRETURN	= require('./src/AST/instrucciones/instruccionRETURN');
     const instruccionFOR	= require('./src/AST/instrucciones/instruccionFOR');
     const instruccionBREAK = require('./src/AST/instrucciones/instruccionBREAK');
     const instruccionCASE	= require('./src/AST/instrucciones/instruccionCASE');
@@ -202,6 +203,8 @@ INSTRUCCION
         | VOID
                 {$$ = $1}
         | CONTINUE
+                {$$ = $1}
+        | RETURN
                 {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
@@ -372,6 +375,12 @@ VOID
 CONTINUE
         :       'Tk_continue' 'Tk_;'
                         {$$ = new instruccionCONTINUE.instruccionCONTINUE();}
+        ;
+RETURN
+        :       'Tk_return' E 'Tk_;'
+                        {$$ = new instruccionRETURN.instruccionRETURN($2);}
+        |       'Tk_return' 'Tk_;'
+                        {$$ = new instruccionRETURN.instruccionRETURN(null);}
         ;
 E
     :   E 'Tk_>' E

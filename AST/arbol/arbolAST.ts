@@ -27,6 +27,7 @@ import { instruccionDEFAULT } from "../instrucciones/instruccionDEFAULT";
 import { instruccionFOR } from "../instrucciones/instruccionFOR";
 import { metodo } from "../instrucciones/metodo";
 import { instruccionCONTINUE } from "../instrucciones/instruccionCONTINUE";
+import { instruccionRETURN } from "../instrucciones/instruccionRETURN";
 
 class arbolAST{
 
@@ -414,6 +415,24 @@ class arbolAST{
             {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONTINUE";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>"; 
+            }
+            else if (node[i] instanceof instruccionRETURN) 
+            {
+                let obj = node[i] as instruccionRETURN;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>RETURN";
+                if(obj.valor != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>EXPRESION";
+                    this.expresion(obj.valor);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 
