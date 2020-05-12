@@ -1,24 +1,28 @@
 
-import poder;
 class clase2{
     
     double prueba(){}
-    if (lucho + juan == pedro)
-    {
-        if (todos)
-        {
-            System.out.println("Somos");
-        }
+    switch ( prueba) {
+        case value:
+            
+            break;
+    
+        default:
+            break;
     }
-    else if (pedro)
-    {
-        if (amilcar())
-        {
+    switch ( prueba) {
+        case value:
+    }
+    switch ( prueba) {
+        case value
+            
+        default:
 
-        }
-        else {
+    }
 
-        }
+    switch (a + i) {
+        case value && xoxo:
+            break;
     }
 
     if (tio)

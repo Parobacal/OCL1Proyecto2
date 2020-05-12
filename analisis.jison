@@ -26,8 +26,9 @@
 "class"                                 return 'Tk_class';
 "import"                                return 'Tk_import';
 "case"                                  return 'Tk_case';
-"default"                               return 'Tk_case';
+"default"                               return 'Tk_default';
 "return"                                return 'Tk_return';
+"break"                                 return 'Tk_break';
 /*Tipos de datos y funciones*/
 "int"                                   return 'Tk_int';
 "double"                                return 'Tk_double';
@@ -93,6 +94,10 @@
     const llamada	= require('./src/AST/instrucciones/llamada');
     const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
+    const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
+    const instruccionBREAK = require('./src/AST/instrucciones/instruccionBREAK');
+    const instruccionCASE	= require('./src/AST/instrucciones/instruccionCASE');
+    const instruccionDEFAULT	= require('./src/AST/instrucciones/instruccionDEFAULT');
     const instruccionWHILE	= require('./src/AST/instrucciones/instruccionWHILE');
     const instruccionDOWHILE	= require('./src/AST/instrucciones/instruccionDOWHILE');
     const instruccionIF	= require('./src/AST/instrucciones/instruccionIF');
@@ -183,6 +188,10 @@ INSTRUCCION
         | DOWHILE
                 {$$ = $1}
         | FUNCION
+                {$$ = $1}
+        | SWITCH
+                {$$ = $1}
+        | BREAK
                 {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
@@ -299,6 +308,34 @@ PARAMETROS_FM
 PARAMETRO
         :       TIPO_DATO 'id'
                         {$$ = new primitivo.primitivo($2,$1);}
+        ;
+SWITCH
+        :       'Tk_switch' 'Tk_PA' E 'Tk_PC' 'Tk_LA' CASES DEFAULT 'Tk_LC'
+                        {$$ = new instruccionSWITCH.instruccionSWITCH($3,$6.getNodos(),$7);}
+        |       'Tk_switch' 'Tk_PA' E 'Tk_PC' 'Tk_LA' CASES 'Tk_LC'
+                        {$$ = new instruccionSWITCH.instruccionSWITCH($3,$6.getNodos(),null);}
+        ;
+CASES
+        :       CASES CASE
+                        {$$ = $1; $$.insertar($2);}
+        |       CASE
+                        {$$ = new arrayAST.arrayAST(); $$.insertar($1);}
+        ;
+CASE 
+        :       'Tk_case' E 'Tk_:' INSTRUCCIONES
+                        {$$ = new instruccionCASE.instruccionCASE($2,$4.getNodos());}
+        |       'Tk_case' E 'Tk_:' 
+                        {$$ = new instruccionCASE.instruccionCASE($2,null);}
+        ;
+DEFAULT
+        :       'Tk_default' 'Tk_:' INSTRUCCIONES
+                        {$$ = new instruccionDEFAULT.instruccionDEFAULT($3.getNodos());}
+        |       'Tk_default' 'Tk_:'
+                        {$$ = new instruccionDEFAULT.instruccionDEFAULT(null);}
+        ;
+BREAK
+        :       'Tk_break' 'Tk_;'
+                        {$$ = new instruccionBREAK.instruccionBREAK();}
         ;
 E
     :   E 'Tk_>' E

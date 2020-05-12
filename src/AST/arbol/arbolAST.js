@@ -18,6 +18,9 @@ var instruccionELSEIF_1 = require("../instrucciones/instruccionELSEIF");
 var instruccionWHILE_1 = require("../instrucciones/instruccionWHILE");
 var instruccionDOWHILE_1 = require("../instrucciones/instruccionDOWHILE");
 var funcion_1 = require("../instrucciones/funcion");
+var instruccionSWITCH_1 = require("../instrucciones/instruccionSWITCH");
+var instruccionBREAK_1 = require("../instrucciones/instruccionBREAK");
+var instruccionCASE_1 = require("../instrucciones/instruccionCASE");
 var arbolAST = /** @class */ (function () {
     function arbolAST(nodos_) {
         this.nodos = nodos_;
@@ -237,6 +240,55 @@ var arbolAST = /** @class */ (function () {
                 }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof instruccionSWITCH_1.instruccionSWITCH) {
+                var obj = node[i];
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA SWITCH";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION SWITCH";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.cases != null) {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CASES";
+                    this.recorrer(obj.cases);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if (obj.default != null) {
+                    var obj2 = obj.default;
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>DEFAULT";
+                    if (obj2.instrucciones != null) {
+                        this.recorrer(obj2.instrucciones);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof instruccionBREAK_1.instruccionBREAK) {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>BREAK";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof instruccionCASE_1.instruccionCASE) {
+                var obj = node[i];
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CASE";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION CASE";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.instrucciones != null) {
+                    this.recorrer(obj.instrucciones);
+                }
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
             }

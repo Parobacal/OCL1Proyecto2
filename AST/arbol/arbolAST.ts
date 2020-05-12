@@ -20,6 +20,10 @@ import { instruccionELSEIF } from "../instrucciones/instruccionELSEIF";
 import { instruccionWHILE } from "../instrucciones/instruccionWHILE";
 import { instruccionDOWHILE } from "../instrucciones/instruccionDOWHILE";
 import { funcion } from "../instrucciones/funcion";
+import { instruccionSWITCH } from "../instrucciones/instruccionSWITCH";
+import { instruccionBREAK } from "../instrucciones/instruccionBREAK";
+import { instruccionCASE } from "../instrucciones/instruccionCASE";
+import { instruccionDEFAULT } from "../instrucciones/instruccionDEFAULT";
 
 class arbolAST{
 
@@ -277,6 +281,62 @@ class arbolAST{
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 
                 this.reporteAST += "</ul>";  
+            }
+            else if (node[i] instanceof instruccionSWITCH) 
+            {
+                let obj = node[i] as instruccionSWITCH;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA SWITCH";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION SWITCH";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.cases != null)
+                {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CASES";
+                    this.recorrer(obj.cases);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if (obj.default != null)
+                {
+                    let obj2 = obj.default as instruccionDEFAULT;
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>DEFAULT";
+                    if (obj2.instrucciones != null)
+                    {
+                        this.recorrer(obj2.instrucciones);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>"; 
+            }
+            else if (node[i] instanceof instruccionBREAK) 
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>BREAK";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>"; 
+            }
+            else if (node[i] instanceof instruccionCASE) 
+            {
+                let obj = node[i] as instruccionCASE;
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CASE";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONDICION CASE";
+                this.expresion(obj.condicion);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.instrucciones != null)
+                {
+                    this.recorrer(obj.instrucciones);
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
             }
         }
         console.log("\n----------------------");
