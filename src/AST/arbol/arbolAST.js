@@ -23,6 +23,7 @@ var instruccionBREAK_1 = require("../instrucciones/instruccionBREAK");
 var instruccionCASE_1 = require("../instrucciones/instruccionCASE");
 var instruccionFOR_1 = require("../instrucciones/instruccionFOR");
 var metodo_1 = require("../instrucciones/metodo");
+var instruccionCONTINUE_1 = require("../instrucciones/instruccionCONTINUE");
 var arbolAST = /** @class */ (function () {
     function arbolAST(nodos_) {
         this.nodos = nodos_;
@@ -345,6 +346,14 @@ var arbolAST = /** @class */ (function () {
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";
                 }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof instruccionCONTINUE_1.instruccionCONTINUE) {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONTINUE";
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>";

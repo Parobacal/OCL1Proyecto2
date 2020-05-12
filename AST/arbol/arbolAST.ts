@@ -26,6 +26,7 @@ import { instruccionCASE } from "../instrucciones/instruccionCASE";
 import { instruccionDEFAULT } from "../instrucciones/instruccionDEFAULT";
 import { instruccionFOR } from "../instrucciones/instruccionFOR";
 import { metodo } from "../instrucciones/metodo";
+import { instruccionCONTINUE } from "../instrucciones/instruccionCONTINUE";
 
 class arbolAST{
 
@@ -404,6 +405,15 @@ class arbolAST{
                     this.reporteAST += "</ul>";
                 }
 
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>"; 
+                this.reporteAST += "</ul>"; 
+            }
+            else if (node[i] instanceof instruccionCONTINUE) 
+            {
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CONTINUE";
                 this.reporteAST += "</li>";
                 this.reporteAST += "</ul>";
                 this.reporteAST += "</li>"; 

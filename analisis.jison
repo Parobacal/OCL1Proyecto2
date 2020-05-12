@@ -18,10 +18,11 @@
 "do"                                    return 'Tk_do';
 "switch"                                return 'Tk_switch';
 "for"                                   return 'Tk_for';
-"System."                                return 'Tk_System.';
-"out."                                   return 'Tk_out.';
+"System."                               return 'Tk_System.';
+"out."                                  return 'Tk_out.';
 "println"                               return 'Tk_println';
 /*Metodos y clases*/
+"continue"                              return 'Tk_continue';
 "void"                                  return 'Tk_void';
 "class"                                 return 'Tk_class';
 "import"                                return 'Tk_import';
@@ -93,6 +94,7 @@
     const declaracion	= require('./src/AST/instrucciones/declaracion');
     const llamada	= require('./src/AST/instrucciones/llamada');
     const metodo	= require('./src/AST/instrucciones/metodo');
+    const instruccionCONTINUE	= require('./src/AST/instrucciones/instruccionCONTINUE');
     const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
     const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
@@ -198,6 +200,8 @@ INSTRUCCION
         | BREAK
                 {$$ = $1}
         | VOID
+                {$$ = $1}
+        | CONTINUE
                 {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
@@ -364,6 +368,10 @@ VOID
                         {$$ = new metodo.metodo($2,null,$6.getNodos());}
         |       'Tk_void' IDE 'Tk_PA' 'Tk_PC' 'Tk_LA' 'Tk_LC'
                         {$$ = new metodo.metodo($2,null,null);}
+        ;
+CONTINUE
+        :       'Tk_continue' 'Tk_;'
+                        {$$ = new instruccionCONTINUE.instruccionCONTINUE();}
         ;
 E
     :   E 'Tk_>' E
