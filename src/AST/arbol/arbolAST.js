@@ -22,6 +22,7 @@ var instruccionSWITCH_1 = require("../instrucciones/instruccionSWITCH");
 var instruccionBREAK_1 = require("../instrucciones/instruccionBREAK");
 var instruccionCASE_1 = require("../instrucciones/instruccionCASE");
 var instruccionFOR_1 = require("../instrucciones/instruccionFOR");
+var metodo_1 = require("../instrucciones/metodo");
 var arbolAST = /** @class */ (function () {
     function arbolAST(nodos_) {
         this.nodos = nodos_;
@@ -313,6 +314,33 @@ var arbolAST = /** @class */ (function () {
                 this.reporteAST += "</ul>";
                 if (obj.instrucciones != null) {
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES FOR";
+                    this.recorrer(obj.instrucciones);
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+            }
+            else if (node[i] instanceof metodo_1.metodo) {
+                var obj = node[i];
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>METODO";
+                this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>IDENTIFICADOR";
+                this.expresion(obj.identificador);
+                this.reporteAST += "</li>";
+                this.reporteAST += "</ul>";
+                if (obj.parametros != null) {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>PARAMETROS";
+                    for (var i_4 = 0; i_4 < obj.parametros.length; i_4++) {
+                        this.expresion(obj.parametros[i_4]);
+                    }
+                    this.reporteAST += "</li>";
+                    this.reporteAST += "</ul>";
+                }
+                if (obj.instrucciones != null) {
+                    this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCIONES";
                     this.recorrer(obj.instrucciones);
                     this.reporteAST += "</li>";
                     this.reporteAST += "</ul>";

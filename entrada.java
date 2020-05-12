@@ -2,21 +2,34 @@
 class clase2{
     
     double prueba(){}
-    for (int i = 0; i < juanito + pepe; i ++)
+    void main()
     {
-        for (i = 0; i < cuando(2,4.5); i --)
+
+    }
+
+    void metodo1( int j, String p, double pablo)
+    {
+        for (int j = 0; j + 2 == lucho; j ++)
         {
-            
+            System.out.println(obj);
         }
-        System.out.println(x);
+        System.out.println(obj);
     }
-    for int j = 0; j + 2 == lucho; j ++)
+    void metodo2()
     {
-
+        System.out.println(obj);
+        System.out.println(obj + 2);
     }
+    
 
-    switch (a + i) {
-        case value && xoxo:
+    switch (key) {
+        case value:
+            
+            break;
+        case value1:
+        case value2:
+            break;
+        default:
             break;
     }
 }

@@ -92,6 +92,7 @@
     const clase	= require('./src/AST/instrucciones/clase');
     const declaracion	= require('./src/AST/instrucciones/declaracion');
     const llamada	= require('./src/AST/instrucciones/llamada');
+    const metodo	= require('./src/AST/instrucciones/metodo');
     const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
     const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
@@ -195,6 +196,8 @@ INSTRUCCION
         | FOR
                 {$$ = $1}
         | BREAK
+                {$$ = $1}
+        | VOID
                 {$$ = $1}
         | error 
                 { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
@@ -351,6 +354,16 @@ CONDICION_FOR
                         {$$ = $1}
         |       ASIGNACION
                         {$$ = $1}
+        ;
+VOID
+        :       'Tk_void' IDE 'Tk_PA' PARAMETROS_FM 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new metodo.metodo($2,$4.getNodos(),$7.getNodos());}
+        |       'Tk_void' IDE 'Tk_PA' PARAMETROS_FM 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new metodo.metodo($2,$4.getNodos(),null);}
+        |       'Tk_void' IDE 'Tk_PA' 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new metodo.metodo($2,null,$6.getNodos());}
+        |       'Tk_void' IDE 'Tk_PA' 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new metodo.metodo($2,null,null);}
         ;
 E
     :   E 'Tk_>' E
