@@ -175,7 +175,7 @@ class arbolAST{
                     this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>SENTENCIA ELSE";
                     let obj2 = obj.else as instruccionELSE;
                     if(obj2.instrucciones != null)
-                    {
+                    {   
                         this.recorrer(obj2.instrucciones);
                     }
                     this.reporteAST += "</li>";

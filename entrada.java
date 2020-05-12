@@ -3,25 +3,32 @@ import poder;
 class clase2{
     
     double prueba(){}
-    String prueba2 (double d1, double d2, double d3)
+    if (lucho + juan == pedro)
     {
-
-    }
-
-    boolean prueba3()
-    {
-        System.out.println("Si traigo instrucciones");
-    }
-
-    int prueba4(int j, String h)
-    {
-        do
+        if (todos)
         {
-    
+            System.out.println("Somos");
         }
-        while(booleano && fidelcastro);
     }
-    System.out.println("Si funciona");
+    else if (pedro)
+    {
+        if (amilcar())
+        {
+
+        }
+        else {
+
+        }
+    }
+
+    if (tio)
+    {
+
+    }
+    else 
+    {
+        System.out.println("Somos");
+    }
 }
 
 class clase3{

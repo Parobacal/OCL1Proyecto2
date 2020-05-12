@@ -233,25 +233,21 @@ ASIGNACION
                 {$$ = new asignacion.asignacion($1,$3);}
         ;
 IF
-        :      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF 'Tk_else' 'Tk_LA' 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' 'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' 'Tk_else' 'Tk_LA' 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' 'Tk_else' 'Tk_LA' 'Tk_LC'
-                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$9);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+        :      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF ELSE
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),$8.getNodos(),$9);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF ELSE
+                        {$$ = new instruccionIF.instruccionIF($3,null,$7.getNodos(),$8);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' METODOS_ELSEIF
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),$8.getNodos(),null);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' METODOS_ELSEIF
+                        {$$ = new instruccionIF.instruccionIF($3,null,$7.getNodos(),null);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC' ELSE
+                        {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,$8);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC' ELSE
+                        {$$ = new instruccionIF.instruccionIF($3,null,null,$7);}
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
                         {$$ = new instruccionIF.instruccionIF($3,$6.getNodos(),null,null);}
-        |       'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
+        |      'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
                         {$$ = new instruccionIF.instruccionIF($3,null,null,null);}
         ;
 METODOS_ELSEIF
@@ -265,6 +261,12 @@ ELSEIF
                         {$$ = new instruccionELSEIF.instruccionELSEIF($4,$7.getNodos());}
         |       'Tk_else' 'Tk_if' 'Tk_PA' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
                         {$$ = new instruccionELSEIF.instruccionELSEIF($4,null);}
+        ;
+ELSE 
+        :       'Tk_else' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionELSE.instruccionELSE($3.getNodos());}
+        |       'Tk_else' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionELSE.instruccionELSE();}
         ;
 WHILE
         :       'Tk_while' 'Tk_PA' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
