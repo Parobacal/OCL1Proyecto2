@@ -95,6 +95,7 @@
     const funcion	= require('./src/AST/instrucciones/funcion');
     const asignacion	= require('./src/AST/instrucciones/asignacion');
     const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
+    const instruccionFOR	= require('./src/AST/instrucciones/instruccionFOR');
     const instruccionBREAK = require('./src/AST/instrucciones/instruccionBREAK');
     const instruccionCASE	= require('./src/AST/instrucciones/instruccionCASE');
     const instruccionDEFAULT	= require('./src/AST/instrucciones/instruccionDEFAULT');
@@ -190,6 +191,8 @@ INSTRUCCION
         | FUNCION
                 {$$ = $1}
         | SWITCH
+                {$$ = $1}
+        | FOR
                 {$$ = $1}
         | BREAK
                 {$$ = $1}
@@ -336,6 +339,18 @@ DEFAULT
 BREAK
         :       'Tk_break' 'Tk_;'
                         {$$ = new instruccionBREAK.instruccionBREAK();}
+        ;
+FOR 
+        :       'Tk_for' 'Tk_PA' CONDICION_FOR E 'Tk_;' E 'Tk_PC' 'Tk_LA' INSTRUCCIONES 'Tk_LC'
+                        {$$ = new instruccionFOR.instruccionFOR($3,$4,$6,$9.getNodos());}
+        |       'Tk_for' 'Tk_PA' CONDICION_FOR E 'Tk_;' E 'Tk_PC' 'Tk_LA' 'Tk_LC'
+                        {$$ = new instruccionFOR.instruccionFOR($3,$4,$6,null);}
+        ;
+CONDICION_FOR
+        :       DECLARACION       
+                        {$$ = $1}
+        |       ASIGNACION
+                        {$$ = $1}
         ;
 E
     :   E 'Tk_>' E

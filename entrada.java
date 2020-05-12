@@ -2,36 +2,22 @@
 class clase2{
     
     double prueba(){}
-    switch ( prueba) {
-        case value:
+    for (int i = 0; i < juanito + pepe; i ++)
+    {
+        for (i = 0; i < cuando(2,4.5); i --)
+        {
             
-            break;
-    
-        default:
-            break;
+        }
+        System.out.println(x);
     }
-    switch ( prueba) {
-        case value:
-    }
-    switch ( prueba) {
-        case value
-            
-        default:
+    for int j = 0; j + 2 == lucho; j ++)
+    {
 
     }
 
     switch (a + i) {
         case value && xoxo:
             break;
-    }
-
-    if (tio)
-    {
-
-    }
-    else 
-    {
-        System.out.println("Somos");
     }
 }
 
