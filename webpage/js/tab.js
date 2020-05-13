@@ -1,6 +1,7 @@
 //const { json } = require("express");
 
 var contador=0;
+var ASThtml;
 function get_cont(){
     return contador++;
 }
@@ -214,8 +215,28 @@ function enviar(){
         return res.json();
     })
     .then(rep => { 
-        console.log(rep.reporte1);
-        document.getElementById("fileContents1").textContent = rep.reporte1
+        console.log(rep.reporteAST);
+        ASThtml = rep.reporteAST;
+        generarReporteAST();
+        document.getElementById("fileContents1").textContent = rep.reporteAST
     })
     .catch(error => console.log('ERROR'))
 }
+
+function generarReporteAST(){
+
+    var cadena = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>REPORTE AST - Proyecto2</title><style>html { margin:0; padding:0; font-size:62.5%; }body { max-width:800px; min-width:300px; margin:0 auto; padding:20px 10px; font-size:14px; font-size:1.4em; }h1 { font-size:1.8em; }.demo { overflow:auto; border:1px solid silver; min-height:100px; }</style><link rel=\"stylesheet\" href=\"./../../dist/themes/default/style.min.css\" /></head><body><h1>Reporte AST</h1><div id=\"html\" class=\"demo\">";
+    cadena += ASThtml;
+    cadena += "</div><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script><script src=\"./../../dist/jstree.min.js\"></script><script>$('#html').jstree();</script></body></html>";
+    let s = cadena;
+    ASThtml = "";
+    let bl = new Blob([s], {type: "text/plain"});
+    let dc = document.createElement("a");
+    dc.download = "ReporteAST.html";
+    window.URL = window.URL || window.webkitURL;
+    dc.href = window.URL.createObjectURL(bl);
+    dc.style.display = "none";
+    document.body.appendChild(dc);
+    dc.click();
+}
+

@@ -24,6 +24,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.Handle("/webpage/", http.StripPrefix("/webpage/", http.FileServer(http.Dir("webpage/"))))
+	http.Handle("/jstree/", http.StripPrefix("/jstree/", http.FileServer(http.Dir("jstree/"))))
 	//http.Handle("/webpage/css/", http.StripPrefix("/webpage/css/", http.FileServer(http.Dir("webpage/css/"))))
 
 	http.HandleFunc("/", index)

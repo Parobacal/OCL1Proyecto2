@@ -4,13 +4,16 @@
 
 //Importaciones para usar en el analizador
 const analizador = require("./analisis").parser;
+
 //Variables para guardar los archivos de entrada y analizarlos
 var entrada1 = "";
+var reporte_Ast;
 
 //Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
 const app = express();
 const cors = require("cors")
+var path = require('path');
 app.listen(3000, () => console.log('Server NODE JS listening on 3000'));
 app.use(cors())
 app.use(express.static('public'));
@@ -23,9 +26,10 @@ app.post('/api', (request,response) => {
     let json = request.body;
     console.log("Se obtuvo: " + json.data + "\n" + "----------------------\n");
     entrada1 = json.data.toString();
+    
     analizar(entrada1);
     response.json({
-        reporte1: 'SOY EL REPORTE1'  
+        reporteAST: reporte_Ast  
     })
 })
 
@@ -33,7 +37,7 @@ app.post('/api', (request,response) => {
 function analizar (entrada1){ 
     let response1 = analizador.parse(entrada1);
     response1.recorrer(response1.getNodos());
-    var reporte = response1.getReporteAst();
-    reporte += "</ul>";
-    console.log(reporte);
+    reporte_Ast = response1.getReporteAst();
+    reporte_Ast += "</ul>";
+    console.log(reporte_Ast);
 }
