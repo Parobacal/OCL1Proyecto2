@@ -1,5 +1,3 @@
-
-
 /* descripcion: Parsea archivos de entrada java. */
 
 /* Análisis Léxico: Expresiones regulares del lenguaje */

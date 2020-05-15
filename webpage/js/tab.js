@@ -1,6 +1,11 @@
 //const { json } = require("express");
 
 var contador=0;
+
+var cont = 0;
+let contenido1 = "";
+let contenido2 = "";
+
 var ASThtml;
 function get_cont(){
     return contador++;
@@ -198,9 +203,26 @@ function DescargarArchivo(){
     }
 }
 
+function obtenerArchivos(){
+    if (cont != 1)
+    {
+        cont++;
+        var ta=document.getElementById(get_vent());
+        contenido1=ta.value;//texto de vent actual
+        console.log("Se guardo el archivo 1");
+
+    }
+    else 
+    {
+        cont = 0;
+        var ta=document.getElementById(get_vent());
+        contenido2=ta.value;//texto de vent actual
+        console.log("Se guardo el archivo 2");
+    }
+}
+
 function enviar(){
-    var ta=document.getElementById(get_vent());
-    const contenido=ta.value;//texto de vent actual
+
     console.log('Enviando desde servidor GO (:5000)');
     const options = {
         method: 'POST',
@@ -208,7 +230,8 @@ function enviar(){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            data: contenido
+            archivoPrincipal: contenido1,
+            archivoSecundario: contenido2
         })
     };
     fetch('http://localhost:3000/api', options).then(res => {

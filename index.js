@@ -7,6 +7,7 @@ const analizador = require("./analisis").parser;
 
 //Variables para guardar los archivos de entrada y analizarlos
 var entrada1 = "";
+var entrada2 = "";
 var reporte_Ast;
 
 //Configuracion para levantar el servidor NODEJS usando express
@@ -25,17 +26,21 @@ app.post('/api', (request,response) => {
     //console.log(request.body);
     let json = request.body;
     console.log("Se obtuvo: " + json.data + "\n" + "----------------------\n");
-    entrada1 = json.data.toString();
-    
-    analizar(entrada1);
+    entrada1 = json.archivoPrincipal.toString();
+    console.log(entrada1);
+    entrada2 = json.archivoSecundario.toString();
+    console.log(entrada2);
+
+    analizar(entrada1, entrada2);
     response.json({
         reporteAST: reporte_Ast  
     })
 })
 
 //Flujo para parsear los archivos de entrada y comparar similitudes
-function analizar (entrada1){ 
+function analizar (entrada1, entrada2){ 
     let response1 = analizador.parse(entrada1);
+    let response2 = analizador.parse(entrada2);
     response1.recorrer(response1.getNodos());
     reporte_Ast = response1.getReporteAst();
     reporte_Ast += "</ul>";
