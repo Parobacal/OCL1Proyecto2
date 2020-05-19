@@ -20,7 +20,7 @@ class comparador{
     reporteVariablesCopia : string;
     
     
-
+//
     constructor (){
         this.clases1 = new Array<nodoAST>();
         this.clases2 = new Array<nodoAST>();

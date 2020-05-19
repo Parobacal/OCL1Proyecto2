@@ -5,6 +5,7 @@ var metodo_1 = require("../AST/instrucciones/metodo");
 var funcion_1 = require("../AST/instrucciones/funcion");
 var declaracion_1 = require("../AST/instrucciones/declaracion");
 var comparador = /** @class */ (function () {
+    //
     function comparador() {
         this.clases1 = new Array();
         this.clases2 = new Array();
