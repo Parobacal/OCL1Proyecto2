@@ -5,8 +5,9 @@
 %%
 
 //COMENTARIOS
+("/*"(.|[\r\n])*?"*/")  /*Comentario multilinea*/
 ("//".*\r\n)|("//".*\n)|("//".*\r)  /*Comentario unilinea*/
-"/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*""*""*/"  /*Comentario multilinea*/
+
 
 //PALABRAS RESERVADAS
 /*Sentencias de control*/

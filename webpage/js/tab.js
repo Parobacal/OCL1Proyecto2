@@ -239,9 +239,16 @@ function enviar(){
     })
     .then(rep => { 
         console.log(rep.reporteAST);
+        console.log(rep.reporteC);
+        console.log(rep.reporteCC);
+        console.log(rep.reporteFMC);
+        console.log(rep.reporteVC);
         ASThtml = rep.reporteAST;
         generarReporteAST();
-        document.getElementById("fileContents1").textContent = rep.reporteAST
+        generarReporteCC(rep.reporteCC);
+        generarReporteFMC(rep.reporteFMC);
+        generarReporteVC(rep.reporteVC);
+        document.getElementById("fileContents1").textContent = rep.reporteC
     })
     .catch(error => console.log('ERROR'))
 }
@@ -263,3 +270,41 @@ function generarReporteAST(){
     dc.click();
 }
 
+function generarReporteCC(reporte_CC){
+
+    let s = reporte_CC;
+    let bl = new Blob([s], {type: "text/plain"});
+    let dc = document.createElement("a");
+    dc.download = "ReporteCC.html";
+    window.URL = window.URL || window.webkitURL;
+    dc.href = window.URL.createObjectURL(bl);
+    dc.style.display = "none";
+    document.body.appendChild(dc);
+    dc.click();
+}
+
+function generarReporteFMC(reporte_FMC){
+
+    let s = reporte_FMC;
+    let bl = new Blob([s], {type: "text/plain"});
+    let dc = document.createElement("a");
+    dc.download = "ReporteFMC.html";
+    window.URL = window.URL || window.webkitURL;
+    dc.href = window.URL.createObjectURL(bl);
+    dc.style.display = "none";
+    document.body.appendChild(dc);
+    dc.click();
+}
+
+function generarReporteVC(reporte_VC){
+
+    let s = reporte_VC;
+    let bl = new Blob([s], {type: "text/plain"});
+    let dc = document.createElement("a");
+    dc.download = "ReporteVC.html";
+    window.URL = window.URL || window.webkitURL;
+    dc.href = window.URL.createObjectURL(bl);
+    dc.style.display = "none";
+    document.body.appendChild(dc);
+    dc.click();
+}

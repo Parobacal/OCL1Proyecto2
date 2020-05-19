@@ -4,11 +4,17 @@
 
 //Importaciones para usar en el analizador
 const analizador = require("./analisis").parser;
+const comparador = require("./src/Funcion/comparador");
 
 //Variables para guardar los archivos de entrada y analizarlos
 var entrada1 = "";
 var entrada2 = "";
+//Variables para devolver los reportes realizados
 var reporte_Ast;
+var reporte_C;
+var reporte_CC;
+var reporte_FMC;
+var reporte_VC;
 
 //Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
@@ -33,7 +39,13 @@ app.post('/api', (request,response) => {
 
     analizar(entrada1, entrada2);
     response.json({
-        reporteAST: reporte_Ast  
+
+        reporteAST: reporte_Ast,
+        reporteC : reporte_C,
+        reporteCC : reporte_CC,
+        reporteFMC : reporte_FMC,
+        reporteVC : reporte_VC
+
     })
 })
 
@@ -44,5 +56,16 @@ function analizar (entrada1, entrada2){
     response1.recorrer(response1.getNodos());
     reporte_Ast = response1.getReporteAst();
     reporte_Ast += "</ul>";
-    console.log(reporte_Ast);
+    let compare = new comparador.comparador();
+    if (compare.comparar(response1.getNodos(),response2.getNodos()) == true)
+    {
+        reporte_C = "SI EXISTE COPIA ENTRE LOS ARCHIVOS";
+        reporte_CC = compare.getReporteClasesCopia();
+        reporte_FMC = compare.getReporteFMCopia();
+        reporte_VC = compare.getReporteVariablesCopia();
+    }
+    else 
+    {
+        reporte_C = "NO EXISTE COPIA ENTRE LOS ARCHIVOS";
+    }
 }
