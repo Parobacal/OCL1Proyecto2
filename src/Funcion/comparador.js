@@ -30,7 +30,7 @@ var comparador = /** @class */ (function () {
         this.reporteFMCopia += "<h1>Reporte de funciones y metodos copia</h1>\n";
         this.reporteFMCopia += "<table border=\"2\" align=\"center\">\n";
         this.reporteFMCopia += "<tr>\n";
-        this.reporteFMCopia += "<th>CLASE</th><th>TIPO DE FUNCION O METODO</th><th>NOMBRE</th><th>PARAMETROS</th>\n";
+        this.reporteFMCopia += "<th>CLASE</th><th>NOMBRE</th><th>TIPO DE FUNCION O METODO</th><th>PARAMETROS</th>\n";
         this.reporteFMCopia += "</tr>\n";
         this.reporteVariablesCopia = "<html>\n";
         this.reporteVariablesCopia += "<header>\n";
