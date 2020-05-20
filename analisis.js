@@ -114,7 +114,7 @@ case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22:
 this.$ = $$[$0]
 break;
 case 28:
- console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line)); 
 break;
 case 29:
 this.$ = new imprimir.imprimir($$[$0-2]);
@@ -580,6 +580,9 @@ _handle_error:
 
     const arbolAST	= require('./src/AST/arbol/arbolAST');
     const arrayAST	= require('./src/AST/arbol/arrayAST');
+    const arrayErrorLS	= require('./src/AST/arbol/arrayErrorLS');
+    global.CarrayErrorLS = new arrayErrorLS.arrayErrorLS();
+    const errorLS	= require('./src/AST/arbol/errorLS');
     const importar	= require('./src/AST/instrucciones/importar');
     const imprimir	= require('./src/AST/instrucciones/imprimir');
     const clase	= require('./src/AST/instrucciones/clase');
@@ -1053,7 +1056,7 @@ case 57:return 89;
 break;
 case 58:return 5;
 break;
-case 59: console.error('Este es un error léxico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
+case 59: CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yy_.yytext,yy_.yylineno)); 
 break;
 }
 },

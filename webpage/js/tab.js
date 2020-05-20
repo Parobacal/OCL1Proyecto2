@@ -243,12 +243,15 @@ function enviar(){
         console.log(rep.reporteCC);
         console.log(rep.reporteFMC);
         console.log(rep.reporteVC);
+        console.log(rep.reporteE);
         ASThtml = rep.reporteAST;
         generarReporteAST();
         generarReporteCC(rep.reporteCC);
         generarReporteFMC(rep.reporteFMC);
         generarReporteVC(rep.reporteVC);
+        generarReporteE(rep.reporteE);
         document.getElementById("fileContents1").textContent = rep.reporteC
+        document.getElementById("fileContents2").textContent = rep.reporteE
     })
     .catch(error => console.log('ERROR'))
 }
@@ -302,6 +305,19 @@ function generarReporteVC(reporte_VC){
     let bl = new Blob([s], {type: "text/plain"});
     let dc = document.createElement("a");
     dc.download = "ReporteVC.html";
+    window.URL = window.URL || window.webkitURL;
+    dc.href = window.URL.createObjectURL(bl);
+    dc.style.display = "none";
+    document.body.appendChild(dc);
+    dc.click();
+}
+
+function generarReporteE(CarrayErrorLS){
+
+    let s = CarrayErrorLS;
+    let bl = new Blob([s], {type: "text/plain"});
+    let dc = document.createElement("a");
+    dc.download = "ReporteE.html";
     window.URL = window.URL || window.webkitURL;
     dc.href = window.URL.createObjectURL(bl);
     dc.style.display = "none";

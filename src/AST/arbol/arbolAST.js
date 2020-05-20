@@ -32,7 +32,7 @@ var arbolAST = /** @class */ (function () {
     }
     arbolAST.prototype.recorrer = function (node) {
         for (var i = 0; i < node.length; i++) {
-            console.log(node[i]);
+            //console.log(node[i]);
             if (node[i] instanceof clase_1.clase) {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>CLASE";

@@ -73,7 +73,7 @@ class comparador{
 
         if (this.setearClases(nodos1,nodos2) == true)
         {
-            console.log("entre a ver si si tengo clases");
+            //console.log("entre a ver si si tengo clases");
             let claseExiste : boolean = false;
             for (let i = 0; i < this.clases1.length; i ++)
             {
@@ -87,11 +87,11 @@ class comparador{
                     // REQUISITO 1: SI EL NOMBRE ES EL MISMO
                     if(nombreClaseOriginal.valor == nombreClaseCopia.valor)
                     {           
-                        console.log("ENTRE AL NOMBRE");         
+                        //console.log("ENTRE AL NOMBRE");         
                         if (this.setearFM(claseOriginal.instrucciones, claseCopia.instrucciones) == true)
                         {
-                            console.log("ENTRE A VER SI TIENE FUNCIONES Y METODOS Y SI TIENE"); 
-                            console.log(this.fm1);
+                            //console.log("ENTRE A VER SI TIENE FUNCIONES Y METODOS Y SI TIENE"); 
+                            //console.log(this.fm1);
                             let n : number = this.fm1.length;
                             let cont : number = 0;
                             for (let m = 0; m < this.fm1.length; m ++)
@@ -147,7 +147,7 @@ class comparador{
                                 }
                                 else // Si es un metodo
                                 {
-                                    console.log("ENTRE A VER SI ES METODO"); 
+                                    //console.log("ENTRE A VER SI ES METODO"); 
                                     for (let n = 0; n < this.fm2.length; n ++)
                                     {
                                         if (this.fm2[n] instanceof metodo)

@@ -1,33 +1,16 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var arrayErrorLS = /** @class */ (function (_super) {
-    __extends(arrayErrorLS, _super);
+var arrayErrorLS = /** @class */ (function () {
     function arrayErrorLS() {
-        return _super.call(this) || this;
+        this.nodos = new Array();
     }
-    arrayErrorLS.add = function (err) {
-        this.prototype.push(err);
+    arrayErrorLS.prototype.insertar = function (nodo_) {
+        this.nodos.push(nodo_);
     };
-    arrayErrorLS.verificarerror = function () {
-        if (this.prototype.length > 0) {
-            return "Se Detectaron Errores de Compilacion";
-        }
-        return "Compilacion Sin Errores";
+    arrayErrorLS.prototype.getNodos = function () {
+        return this.nodos;
     };
-    arrayErrorLS.geterror = function () {
+    arrayErrorLS.prototype.getErrores = function () {
         var cad = "";
         cad += "<html>\n";
         cad += "<header>\n";
@@ -40,11 +23,9 @@ var arrayErrorLS = /** @class */ (function (_super) {
         cad += "<tr>\n";
         cad += "<th>TIPO DE ERROR</th><th>DESCRIPCION</th><th>LINEA</th>\n";
         cad += "</tr>\n";
-        for (var i = 0; i < this.prototype.length; i++) {
+        for (var i = 0; i < this.nodos.length; i++) {
             cad += "<tr>\n";
-            cad += "<td>" + this.prototype[i].tipo + "</td><td>" +
-                this.prototype[i].descripcion + "</td><td>" +
-                this.prototype[i].fila + "</td>\n";
+            cad += "<td>" + this.nodos[i].tipo + "</td><td>" + this.nodos[i].descripcion + "</td><td>" + this.nodos[i].fila + "</td>\n";
             cad += "</tr>\n";
         }
         cad += "</table>\n";
@@ -53,11 +34,6 @@ var arrayErrorLS = /** @class */ (function (_super) {
         cad += "</html>\n";
         return cad;
     };
-    arrayErrorLS.clear = function () {
-        while (this.prototype.length > 0) {
-            this.prototype.pop();
-        }
-    };
     return arrayErrorLS;
-}(Array));
+}());
 exports.arrayErrorLS = arrayErrorLS;

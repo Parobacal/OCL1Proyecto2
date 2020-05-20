@@ -1,5 +1,42 @@
 /* descripcion: Parsea archivos de entrada java. */
 
+/* IMPORTACIONES */
+%{
+    const arbolAST	= require('./src/AST/arbol/arbolAST');
+    const arrayAST	= require('./src/AST/arbol/arrayAST');
+    const arrayErrorLS	= require('./src/AST/arbol/arrayErrorLS');
+    global.CarrayErrorLS = new arrayErrorLS.arrayErrorLS();
+    const errorLS	= require('./src/AST/arbol/errorLS');
+    const importar	= require('./src/AST/instrucciones/importar');
+    const imprimir	= require('./src/AST/instrucciones/imprimir');
+    const clase	= require('./src/AST/instrucciones/clase');
+    const declaracion	= require('./src/AST/instrucciones/declaracion');
+    const llamada	= require('./src/AST/instrucciones/llamada');
+    const metodo	= require('./src/AST/instrucciones/metodo');
+    const instruccionCONTINUE	= require('./src/AST/instrucciones/instruccionCONTINUE');
+    const funcion	= require('./src/AST/instrucciones/funcion');
+    const asignacion	= require('./src/AST/instrucciones/asignacion');
+    const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
+    const instruccionRETURN	= require('./src/AST/instrucciones/instruccionRETURN');
+    const instruccionFOR	= require('./src/AST/instrucciones/instruccionFOR');
+    const instruccionBREAK = require('./src/AST/instrucciones/instruccionBREAK');
+    const instruccionCASE	= require('./src/AST/instrucciones/instruccionCASE');
+    const instruccionDEFAULT	= require('./src/AST/instrucciones/instruccionDEFAULT');
+    const instruccionWHILE	= require('./src/AST/instrucciones/instruccionWHILE');
+    const instruccionDOWHILE	= require('./src/AST/instrucciones/instruccionDOWHILE');
+    const instruccionIF	= require('./src/AST/instrucciones/instruccionIF');
+    const instruccionELSEIF	= require('./src/AST/instrucciones/instruccionELSEIF');
+    const instruccionELSE	= require('./src/AST/instrucciones/instruccionELSE');
+    const identificador = require('./src/AST/expresiones/identificador');
+    const primitivo = require('./src/AST/expresiones/primitivo');
+    const aritmetico = require('./src/AST/expresiones/aritmetico');
+    const relacional = require('./src/AST/expresiones/relacional');
+    const logica = require('./src/AST/expresiones/logica');
+    const aritmeticoUnario = require('./src/AST/expresiones/aritmeticoUnario');
+    const logicaUnario = require('./src/AST/expresiones/logicaUnario');
+%}
+
+
 /* Análisis Léxico: Expresiones regulares del lenguaje */
 %lex
 %%
@@ -80,41 +117,11 @@
 
 
 <<EOF>>                                 return 'EOF';
-.                                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                                       { CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yytext,yylineno)); }
 
 /lex
 
-%{
-    const arbolAST	= require('./src/AST/arbol/arbolAST');
-    const arrayAST	= require('./src/AST/arbol/arrayAST');
-    const importar	= require('./src/AST/instrucciones/importar');
-    const imprimir	= require('./src/AST/instrucciones/imprimir');
-    const clase	= require('./src/AST/instrucciones/clase');
-    const declaracion	= require('./src/AST/instrucciones/declaracion');
-    const llamada	= require('./src/AST/instrucciones/llamada');
-    const metodo	= require('./src/AST/instrucciones/metodo');
-    const instruccionCONTINUE	= require('./src/AST/instrucciones/instruccionCONTINUE');
-    const funcion	= require('./src/AST/instrucciones/funcion');
-    const asignacion	= require('./src/AST/instrucciones/asignacion');
-    const instruccionSWITCH	= require('./src/AST/instrucciones/instruccionSWITCH');
-    const instruccionRETURN	= require('./src/AST/instrucciones/instruccionRETURN');
-    const instruccionFOR	= require('./src/AST/instrucciones/instruccionFOR');
-    const instruccionBREAK = require('./src/AST/instrucciones/instruccionBREAK');
-    const instruccionCASE	= require('./src/AST/instrucciones/instruccionCASE');
-    const instruccionDEFAULT	= require('./src/AST/instrucciones/instruccionDEFAULT');
-    const instruccionWHILE	= require('./src/AST/instrucciones/instruccionWHILE');
-    const instruccionDOWHILE	= require('./src/AST/instrucciones/instruccionDOWHILE');
-    const instruccionIF	= require('./src/AST/instrucciones/instruccionIF');
-    const instruccionELSEIF	= require('./src/AST/instrucciones/instruccionELSEIF');
-    const instruccionELSE	= require('./src/AST/instrucciones/instruccionELSE');
-    const identificador = require('./src/AST/expresiones/identificador');
-    const primitivo = require('./src/AST/expresiones/primitivo');
-    const aritmetico = require('./src/AST/expresiones/aritmetico');
-    const relacional = require('./src/AST/expresiones/relacional');
-    const logica = require('./src/AST/expresiones/logica');
-    const aritmeticoUnario = require('./src/AST/expresiones/aritmeticoUnario');
-    const logicaUnario = require('./src/AST/expresiones/logicaUnario');
-%}
+
 /* operator associations and precedence */
 
 
@@ -206,7 +213,7 @@ INSTRUCCION
         | RETURN
                 {$$ = $1}
         | error 
-                { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+                { CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line)); }
         ;
 IMPRIMIR
         :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'

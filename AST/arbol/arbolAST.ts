@@ -43,7 +43,7 @@ class arbolAST{
 
         for (let i = 0; i < node.length; i ++)
         {
-            console.log(node[i]);
+            //console.log(node[i]);
             if (node[i] instanceof clase)
             {
                 this.reporteAST += "<ul><li data-jstree='{\"opened\" : true}'>INSTRUCCION";

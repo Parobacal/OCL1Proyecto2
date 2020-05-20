@@ -1,24 +1,23 @@
 import {errorLS} from "./errorLS";
 
-class arrayErrorLS extends Array<errorLS>{
+class arrayErrorLS{
 
    
+    nodos : Array<errorLS>;
+    
     constructor(){
-        super();
+        this.nodos = new Array<errorLS>();
     }
 
-    public static add(err:errorLS){
-        this.prototype.push(err);
+    public insertar (nodo_ : errorLS):void{
+        this.nodos.push(nodo_);
     }
 
-    public static verificarerror():string{
-        if(this.prototype.length>0){
-            return "Se Detectaron Errores de Compilacion";
-        }
-        return "Compilacion Sin Errores";
+    public getNodos():Array<errorLS>{
+        return this.nodos;
     }
 
-    public static geterror():string{
+    public getErrores():string{
         var cad:string="";
         cad+="<html>\n";
             cad+="<header>\n";
@@ -31,11 +30,9 @@ class arrayErrorLS extends Array<errorLS>{
                         cad+="<tr>\n";
                             cad+="<th>TIPO DE ERROR</th><th>DESCRIPCION</th><th>LINEA</th>\n";
                         cad+="</tr>\n";
-                        for(var i=0; i<this.prototype.length;i++){
+                        for(var i=0; i< this.nodos.length; i++){
                             cad+="<tr>\n";
-                                cad+="<td>"+this.prototype[i].tipo+"</td><td>"+
-                                this.prototype[i].descripcion+"</td><td>"+
-                                this.prototype[i].fila+"</td>\n";
+                                cad+="<td>" + this.nodos[i].tipo + "</td><td>" + this.nodos[i].descripcion+"</td><td>" + this.nodos[i].fila+"</td>\n";
                             cad+="</tr>\n";
                         }
                     cad+="</table>\n";
@@ -46,10 +43,6 @@ class arrayErrorLS extends Array<errorLS>{
         return cad;
     }
 
-    public static clear(){
-        while(this.prototype.length>0){
-            this.prototype.pop();
-        }
-    }
+
 }
 export {arrayErrorLS};

@@ -76,6 +76,7 @@
                   <li><span><a href="portfolio-index.html">Reportes</a></span>
                      <ul>
                         <li><a href="jstree/demo/basic/ReporteAST.html">Reporte AST</a></li>
+                        <li><a href="Reportes/ReporteE.html">Reporte Errores</a></li>
                         <li><a href="Reportes/ReporteCC.html">Reporte Clases Copia</a></li>
                         <li><a href="Reportes/ReporteFMC.html">Reporte Funciones y Metodos Copia</a></li>
                         <li><a href="Reportes/ReporteVC.html">Reporte Variables Copia</a></li>
@@ -132,17 +133,13 @@
   <div class="tabContainer">
    <div class="buttonContainer">
        <button onclick="showPanel(0,'#008C9E')">Resultado</button>
-       <button onclick="showPanel(1,'#008C9E')">Errores Léxicos</button>
-       <button onclick="showPanel(2,'#008C9E')">Erroes Sintácticos</button>
+       <button onclick="showPanel(1,'#008C9E')">Errores Lexicos y Sintácticos</button>
    </div>
    <div class="tabPanel">
       <textarea id = "fileContents1" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Copia o no copia</textarea>
    </div>
    <div class="tabPanel">
-      <textarea id = "fileContents" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Errores Lexicos</textarea>
-   </div>
-   <div class="tabPanel">
-      <textarea id = "fileContents" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Errores Sintacticos</textarea>
+      <textarea id = "fileContents2" readonly rows = "5" cols="70" style="background-color:#008C9E; color:white"> Errores Lexicos y sintacticos</textarea>
    </div>
 </div>
   <!-- Consolas-->

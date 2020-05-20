@@ -31,11 +31,11 @@ app.post('/api', (request,response) => {
     console.log('Se recibio informacion desde puerto servidor GO(5000)');
     //console.log(request.body);
     let json = request.body;
-    console.log("Se obtuvo: " + json.data + "\n" + "----------------------\n");
+    //console.log("Se obtuvo: " + json.data + "\n" + "----------------------\n");
     entrada1 = json.archivoPrincipal.toString();
-    console.log(entrada1);
+    //console.log(entrada1);
     entrada2 = json.archivoSecundario.toString();
-    console.log(entrada2);
+    //console.log(entrada2);
 
     analizar(entrada1, entrada2);
     response.json({
@@ -44,7 +44,8 @@ app.post('/api', (request,response) => {
         reporteC : reporte_C,
         reporteCC : reporte_CC,
         reporteFMC : reporte_FMC,
-        reporteVC : reporte_VC
+        reporteVC : reporte_VC,
+        reporteE : CarrayErrorLS.getErrores()
 
     })
 })
@@ -52,6 +53,7 @@ app.post('/api', (request,response) => {
 //Flujo para parsear los archivos de entrada y comparar similitudes
 function analizar (entrada1, entrada2){ 
     let response1 = analizador.parse(entrada1);
+    console.log(CarrayErrorLS.getErrores());
     let response2 = analizador.parse(entrada2);
     response1.recorrer(response1.getNodos());
     reporte_Ast = response1.getReporteAst();

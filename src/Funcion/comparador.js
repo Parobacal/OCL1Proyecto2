@@ -48,7 +48,7 @@ var comparador = /** @class */ (function () {
     comparador.prototype.comparar = function (nodos1, nodos2) {
         //##############################CLASES#############################
         if (this.setearClases(nodos1, nodos2) == true) {
-            console.log("entre a ver si si tengo clases");
+            //console.log("entre a ver si si tengo clases");
             var claseExiste = false;
             for (var i = 0; i < this.clases1.length; i++) {
                 var claseOriginal = this.clases1[i];
@@ -58,10 +58,10 @@ var comparador = /** @class */ (function () {
                     var nombreClaseCopia = claseCopia.valor;
                     // REQUISITO 1: SI EL NOMBRE ES EL MISMO
                     if (nombreClaseOriginal.valor == nombreClaseCopia.valor) {
-                        console.log("ENTRE AL NOMBRE");
+                        //console.log("ENTRE AL NOMBRE");         
                         if (this.setearFM(claseOriginal.instrucciones, claseCopia.instrucciones) == true) {
-                            console.log("ENTRE A VER SI TIENE FUNCIONES Y METODOS Y SI TIENE");
-                            console.log(this.fm1);
+                            //console.log("ENTRE A VER SI TIENE FUNCIONES Y METODOS Y SI TIENE"); 
+                            //console.log(this.fm1);
                             var n = this.fm1.length;
                             var cont = 0;
                             for (var m = 0; m < this.fm1.length; m++) {
@@ -105,7 +105,7 @@ var comparador = /** @class */ (function () {
                                 }
                                 else // Si es un metodo
                                  {
-                                    console.log("ENTRE A VER SI ES METODO");
+                                    //console.log("ENTRE A VER SI ES METODO"); 
                                     for (var n_2 = 0; n_2 < this.fm2.length; n_2++) {
                                         if (this.fm2[n_2] instanceof metodo_1.metodo) {
                                             var metodoClaseOriginal = this.fm1[m];
