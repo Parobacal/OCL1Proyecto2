@@ -117,7 +117,7 @@ class comparador{
                                                         let parametroFuncionClaseCopia = funcionClaseCopia.parametros[o] as primitivo;
                                                         if (parametroFuncionClaseOriginal.tipo == parametroFuncionClaseCopia.tipo)
                                                         {
-                                                            parametros += parametroFuncionClaseOriginal.tipo + parametroFuncionClaseOriginal.valor + ",";
+                                                            parametros += parametroFuncionClaseOriginal.tipo + " " + parametroFuncionClaseOriginal.valor + "    ";
                                                             existeFuncion = true;
                                                         }
                                                         else 

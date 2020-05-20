@@ -114,7 +114,7 @@ case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22:
 this.$ = $$[$0]
 break;
 case 28:
- CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line)); 
+ CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line, this._$.first_column)); 
 break;
 case 29:
 this.$ = new imprimir.imprimir($$[$0-2]);
@@ -1056,7 +1056,7 @@ case 57:return 89;
 break;
 case 58:return 5;
 break;
-case 59: CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yy_.yytext,yy_.yylineno)); 
+case 59: CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yy_.yytext, yy_.yylloc.first_line, yy_.yylloc.first_column)); 
 break;
 }
 },

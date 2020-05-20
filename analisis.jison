@@ -117,7 +117,7 @@
 
 
 <<EOF>>                                 return 'EOF';
-.                                       { CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yytext,yylineno)); }
+.                                       { CarrayErrorLS.insertar(new errorLS.errorLS("Lexico","No se esperaba el caracter: "+yytext, yylloc.first_line, yylloc.first_column)); }
 
 /lex
 
@@ -213,7 +213,7 @@ INSTRUCCION
         | RETURN
                 {$$ = $1}
         | error 
-                { CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line)); }
+                { CarrayErrorLS.insertar(new errorLS.errorLS("Sintáctico","No se esperaba el caracter: "+yytext,this._$.first_line, this._$.first_column)); }
         ;
 IMPRIMIR
         :   'Tk_System.' 'Tk_out.' 'Tk_println' 'Tk_PA' E 'Tk_PC' 'Tk_;'

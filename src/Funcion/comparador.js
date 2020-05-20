@@ -79,7 +79,7 @@ var comparador = /** @class */ (function () {
                                                         var parametroFuncionClaseOriginal = funcionClaseOriginal.parametros[o];
                                                         var parametroFuncionClaseCopia = funcionClaseCopia.parametros[o];
                                                         if (parametroFuncionClaseOriginal.tipo == parametroFuncionClaseCopia.tipo) {
-                                                            parametros += parametroFuncionClaseOriginal.tipo + parametroFuncionClaseOriginal.valor + ",";
+                                                            parametros += parametroFuncionClaseOriginal.tipo + " " + parametroFuncionClaseOriginal.valor + "    ";
                                                             existeFuncion = true;
                                                         }
                                                         else {

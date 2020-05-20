@@ -45,7 +45,8 @@ app.post('/api', (request,response) => {
         reporteCC : reporte_CC,
         reporteFMC : reporte_FMC,
         reporteVC : reporte_VC,
-        reporteE : CarrayErrorLS.getErrores()
+        reporteE : CarrayErrorLS.getErrores(),
+        reporteEM : CarrayErrorLS.getErroresMensaje()
 
     })
 })

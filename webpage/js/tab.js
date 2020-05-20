@@ -185,7 +185,7 @@ function DescargarArchivo(){
     var MM=hoy.getMinutes();
     var formato=get_vent().replace("textarea","")+"_"+dd+"_"+mm+"_"+yyyy+"_"+HH+"_"+MM;
 
-    var nombre="Archivo"+formato+".coline";//nombre del archivo
+    var nombre="Archivo"+formato+".java";//nombre del archivo
     var file=new Blob([contenido], {type: 'text/plain'});
 
     if(window.navigator.msSaveOrOpenBlob){
@@ -238,12 +238,12 @@ function enviar(){
         return res.json();
     })
     .then(rep => { 
-        console.log(rep.reporteAST);
-        console.log(rep.reporteC);
-        console.log(rep.reporteCC);
-        console.log(rep.reporteFMC);
-        console.log(rep.reporteVC);
-        console.log(rep.reporteE);
+        //console.log(rep.reporteAST);
+        //console.log(rep.reporteC);
+        //console.log(rep.reporteCC);
+        //console.log(rep.reporteFMC);
+        //console.log(rep.reporteVC);
+        //console.log(rep.reporteE);
         ASThtml = rep.reporteAST;
         generarReporteAST();
         generarReporteCC(rep.reporteCC);
@@ -251,7 +251,7 @@ function enviar(){
         generarReporteVC(rep.reporteVC);
         generarReporteE(rep.reporteE);
         document.getElementById("fileContents1").textContent = rep.reporteC
-        document.getElementById("fileContents2").textContent = rep.reporteE
+        document.getElementById("fileContents2").textContent = rep.reporteEM
     })
     .catch(error => console.log('ERROR'))
 }
