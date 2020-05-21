@@ -118,7 +118,7 @@ var comparador = /** @class */ (function () {
                                                     var parametroFuncionClaseOriginal = metodoClaseOriginal.parametros[o];
                                                     var parametroFuncionClaseCopia = metodoClaseCopia.parametros[o];
                                                     if (parametroFuncionClaseOriginal.tipo == parametroFuncionClaseCopia.tipo) {
-                                                        parametros += parametroFuncionClaseOriginal.tipo + parametroFuncionClaseOriginal.valor + ",";
+                                                        parametros += parametroFuncionClaseOriginal.tipo + " " + parametroFuncionClaseOriginal.valor + "    ";
                                                         existeFuncion = true;
                                                     }
                                                     else {
@@ -187,7 +187,7 @@ var comparador = /** @class */ (function () {
                             var nombres = "";
                             for (var m = 0; m < declaracionClaseOriginal.lista_identificadores.length; m++) {
                                 var name_1 = declaracionClaseOriginal.lista_identificadores[m];
-                                nombres += name_1.valor;
+                                nombres += name_1.valor + " ";
                             }
                             this.reporteVariablesCopia += "<tr>\n";
                             this.reporteVariablesCopia += "<td>" + nombreClase + "</td><td>" + nombreFM + "</td><td>" + declaracionClaseOriginal.tipo + "</td><td>" + nombres + "</td>\n";
@@ -227,7 +227,7 @@ var comparador = /** @class */ (function () {
         //Se insertan las clases 
         var bfm1 = false;
         var bfm2 = false;
-        if (nodos1 != null) {
+        if ((nodos1 != null) && (nodos2 != null)) {
             for (var i = 0; i < nodos1.length; i++) {
                 if (nodos1[i] instanceof funcion_1.funcion) {
                     var func = nodos1[i];

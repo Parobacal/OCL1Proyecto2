@@ -3,7 +3,7 @@ import {errorLS} from "./errorLS";
 class arrayErrorLS{
 
    
-    nodos : Array<errorLS>;
+    private nodos : Array<errorLS>;
     
     constructor(){
         this.nodos = new Array<errorLS>();
@@ -15,6 +15,10 @@ class arrayErrorLS{
 
     public getNodos():Array<errorLS>{
         return this.nodos;
+    }
+
+    public limpiarNodos():void{
+        this.nodos = new Array<errorLS>();
     }
 
     public getErrores():string{
@@ -39,7 +43,7 @@ class arrayErrorLS{
                 cad+="</div>\n";
             cad+="</body>\n";
         cad+="</html>\n";
-
+        
         return cad;
     }
 

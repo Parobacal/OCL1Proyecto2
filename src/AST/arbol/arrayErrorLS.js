@@ -10,6 +10,9 @@ var arrayErrorLS = /** @class */ (function () {
     arrayErrorLS.prototype.getNodos = function () {
         return this.nodos;
     };
+    arrayErrorLS.prototype.limpiarNodos = function () {
+        this.nodos = new Array();
+    };
     arrayErrorLS.prototype.getErrores = function () {
         var cad = "";
         cad += "<html>\n";

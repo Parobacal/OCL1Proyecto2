@@ -15,12 +15,15 @@ var reporte_C;
 var reporte_CC;
 var reporte_FMC;
 var reporte_VC;
+var reporte_E;
+var reporte_EM;
 
 //Configuracion para levantar el servidor NODEJS usando express
 const express = require('express');
 const app = express();
 const cors = require("cors")
 var path = require('path');
+const { arrayErrorLS } = require("./src/AST/arbol/arrayErrorLS");
 app.listen(3000, () => console.log('Server NODE JS listening on 3000'));
 app.use(cors())
 app.use(express.static('public'));
@@ -45,17 +48,23 @@ app.post('/api', (request,response) => {
         reporteCC : reporte_CC,
         reporteFMC : reporte_FMC,
         reporteVC : reporte_VC,
-        reporteE : CarrayErrorLS.getErrores(),
-        reporteEM : CarrayErrorLS.getErroresMensaje()
+        reporteE : reporte_E,
+        reporteEM : reporte_EM
 
     })
 })
 
 //Flujo para parsear los archivos de entrada y comparar similitudes
 function analizar (entrada1, entrada2){ 
+    
+    //Se limpia el array de errores
+    CarrayErrorLS.limpiarNodos();
+
     let response1 = analizador.parse(entrada1);
-    console.log(CarrayErrorLS.getErrores());
+    reporte_E = CarrayErrorLS.getErrores();
+    reporte_EM = CarrayErrorLS.getErroresMensaje();
     let response2 = analizador.parse(entrada2);
+    
     response1.recorrer(response1.getNodos());
     reporte_Ast = response1.getReporteAst();
     reporte_Ast += "</ul>";

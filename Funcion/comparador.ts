@@ -165,7 +165,7 @@ class comparador{
                                                     let parametroFuncionClaseCopia = metodoClaseCopia.parametros[o] as primitivo;
                                                     if (parametroFuncionClaseOriginal.tipo == parametroFuncionClaseCopia.tipo)
                                                     {
-                                                        parametros += parametroFuncionClaseOriginal.tipo + parametroFuncionClaseOriginal.valor + ",";
+                                                        parametros += parametroFuncionClaseOriginal.tipo + " " + parametroFuncionClaseOriginal.valor + "    ";
                                                         existeFuncion = true;
                                                     }
                                                     else 
@@ -258,7 +258,7 @@ class comparador{
                             for (let m = 0; m < declaracionClaseOriginal.lista_identificadores.length; m ++)
                             {
                                 let name = declaracionClaseOriginal.lista_identificadores[m] as identificador;
-                                nombres += name.valor;
+                                nombres += name.valor + " ";
                             }
                             this.reporteVariablesCopia += "<tr>\n";
                             this.reporteVariablesCopia += "<td>"+ nombreClase + "</td><td>" + nombreFM + "</td><td>"  + declaracionClaseOriginal.tipo + "</td><td>" + nombres + "</td>\n";
@@ -310,7 +310,7 @@ class comparador{
         //Se insertan las clases 
         let bfm1 : boolean = false;
         let bfm2 : boolean = false;
-        if (nodos1 != null)
+        if ((nodos1 != null) && (nodos2 != null))
         {
             for(let i = 0; i < nodos1.length; i ++)
             {
